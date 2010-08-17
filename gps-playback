@@ -1,0 +1,11 @@
+#!/bin/bash
+
+IFS=$'\x0A'$'\x0D'
+for row in $(<$1); do
+	tempo=$(echo $row | cut -d' ' -f1)
+	data=$(echo $row | cut -d' ' -f2,3,4)
+	echo "Moving to $data"
+	#gps-send $data >/dev/null
+	gps-send $data 
+	sleep $tempo
+done

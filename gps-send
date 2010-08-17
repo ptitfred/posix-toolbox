@@ -1,0 +1,16 @@
+#!/bin/bash
+
+DDMS_PORT=5554
+
+if [ $# -eq 1 ]; then
+	lon=$(echo $1 | cut -d, -f2)
+	lat=$(echo $1 | cut -d, -f1)
+fi
+if [ $# -eq 2 ]; then
+	lon=$1
+	lat=$2
+fi
+
+
+echo "geo fix $lon $lat" | telnet localhost $DDMS_PORT
+
