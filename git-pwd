@@ -3,4 +3,9 @@
 wd=$(pwd)
 gd=$(git rev-parse --git-dir 2>/dev/null)
 root=${gd%/.git}
-echo ${wd##${root}}
+if [[ $root == ".git" ]]
+then
+	echo "/"
+else
+	echo ${wd##${root}}
+fi
