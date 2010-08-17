@@ -1,0 +1,6 @@
+#!/bin/bash
+
+ssh-agent /bin/bash
+ssh-add ~/.ssh/id_dsa
+ssh-add ~/.ssh/ptitfred
+
