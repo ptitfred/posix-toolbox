@@ -27,7 +27,7 @@ if [ -z "$maildest" ]; then
 fi
 
 oldshort=$(git short $oldrev)
-newshort=$(git short $newshort)
+newshort=$(git short $newrev)
 branch=$(echo $refname | sed ':^/refs/heads/:!d' | wc -l )
 tag=$(echo $refname | sed ':^/refs/tags/:!d' | wc -l)
 
