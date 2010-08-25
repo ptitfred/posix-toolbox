@@ -1,6 +1,9 @@
 #!/bin/bash
 
 ssh-agent /bin/bash
-ssh-add ~/.ssh/id_dsa
-ssh-add ~/.ssh/ptitfred
+if [ -e ~/.ssh/autokeys ]; then
+	for key in $(<~/.ssh/autokeys); do
+		ssh-add ~/.ssh/$key
+	done
+fi
 
