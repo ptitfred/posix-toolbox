@@ -1,0 +1,4 @@
+#!/bin/bash
+
+git log --abbrev-commit --format=%h $1^..$1
+
