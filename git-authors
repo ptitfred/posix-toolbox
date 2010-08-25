@@ -5,5 +5,5 @@ if [ "$committees" == "" ]; then
 	committees=
 fi
 
-git log --format="\"%an\" <%ae>" $committees | sort | uniq | sed 's/^/, /' | xargs | cut -b3-
+git log --format="\\\"%an\\\" <%ae>" $committees | sort | uniq | sed 's/^/, /' | xargs | cut -b3-
 
