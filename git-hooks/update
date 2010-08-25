@@ -24,6 +24,8 @@ if [ -z "$maildest" ]; then
 	exit 0
 fi
 
+oldshort=$(git short $oldrev)
+newshort=$(git short $newshort)
 branch=$(echo $refname | sed ':^/refs/heads/:!d' | wc -l )
 tag=$(echo $refname | sed ':^/refs/tags/:!d' | wc -l)
 
@@ -47,6 +49,7 @@ cat <<EOF | sendmail -t
 From: $sender
 To: $maildest
 Subject: $subject
-$oldrev -> $newrev
+$oldshort -> $newshort
 $content
 EOF
+
