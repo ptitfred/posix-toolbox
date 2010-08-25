@@ -1,0 +1,52 @@
+#!/bin/bash
+
+refname="$1"
+oldrev="$2"
+newrev="$3"
+
+if [ -z "$GIT_DIR" ]; then
+	echo "Don't run this script from the command line." >$2
+	echo " (if you want, you could supply GIT_DIR then run ">&2
+	echo "  $0 <ref> <oldrev> <newrev>)" >&2
+	exit 1
+fi
+
+if [ -z "$refname" -o -z "$oldrev" -o -z "$newrev" ]; then
+	echo "Usage: $0 <ref> <oldrev> <newrev>" >&2
+	exit 1
+fi
+
+# --- Config
+sender=$(git config push.mail.sender)
+maildest=$(git config push.mail.tos)
+
+if [ -z "$maildest" ]; then
+	exit 0
+fi
+
+branch=$(echo $refname | sed ':^/refs/heads/:!d' | wc -l )
+tag=$(echo $refname | sed ':^/refs/tags/:!d' | wc -l)
+
+if [ $branch == 1 ]; then
+	branchname=$(echo $refname | cut -b12-)
+	if [ "$oldrev" != "0000000000000000000000000000000000000000" ]; then
+		subject="push on $branchname"
+		content=$(git shortlog $oldrev..$newrev)
+		echo $branchname $oldrev..$newrev
+	else
+		subject="new branch $branchname"
+		echo $subject
+	fi
+elif [ $tag == 1 ]; then
+	tagname=$(echo $refname | cut -b11-)
+	subject="new tag $tagname"
+	echo $subject
+fi
+
+cat <<EOF | sendmail -t
+From: $sender
+To: $maildest
+Subject: $subject
+$oldrev -> $newrev
+$content
+EOF
