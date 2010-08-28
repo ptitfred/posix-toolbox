@@ -7,7 +7,7 @@ newrev="$3"
 PATH=~/bin:$PATH
 
 if [ -z "$GIT_DIR" ]; then
-	echo "Don't run this script from the command line." >$2
+	echo "Don't run this script from the command line." >&2
 	echo " (if you want, you could supply GIT_DIR then run ">&2
 	echo "  $0 <ref> <oldrev> <newrev>)" >&2
 	exit 1
@@ -51,7 +51,11 @@ cat <<EOF | sendmail -t
 From: $sender
 To: $maildest
 Subject: $subject
-$oldshort -> $newshort
-$content
+Content-type: text/html
+<html><body> 
+<h4>Contenu du push sur proto</h4>
+<code>$oldshort..$newshort</code>
+<pre>$content</pre>
+</body></html>
 EOF
 
