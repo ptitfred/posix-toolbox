@@ -1,0 +1,19 @@
+# SSH helper to add keys reference in ~/.ssh/autokeys file"
+# To be included in .bashrc (or .profile, not so sure) and manually called as : reg_ssh_keys
+# Author: Frédéric Menou <frederic.menou@gmail.com>
+
+# To include this, simply source it with :
+#  SSH_KEYS_HELPER=/path/to/ssh-keys
+#  if [ -f $SSH_KEYS_HELPER ]; then
+#  	. $SSH_KEYS_HELPER
+#  fi
+
+reg_ssh_keys() {
+        echo "Registering SSH keys listed in ~/.ssh/autokeys"
+        eval $(ssh-agent)
+        for key in $(<~/.ssh/autokeys); do
+                ssh-add ~/.ssh/$key
+        done
+        ssh-add -l
+}
+

@@ -1,9 +1,0 @@
-#!/bin/bash
-
-ssh-agent /bin/bash
-if [ -e ~/.ssh/autokeys ]; then
-	for key in $(<~/.ssh/autokeys); do
-		ssh-add ~/.ssh/$key
-	done
-fi
-
