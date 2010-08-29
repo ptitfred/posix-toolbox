@@ -1,6 +1,6 @@
 #!/bin/bash
 
-wd=$(pwd)
+wd=$(pwd -P)
 gd=$(git rev-parse --git-dir 2>/dev/null)
 root=${gd%/.git}
 if [[ $root == ".git" ]]
