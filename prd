@@ -1,0 +1,21 @@
+#!/bin/bash
+
+if [ "$#" = "0" ]; then
+	pwd=$(pwd)
+else
+	pwd=$1
+fi
+home=${HOME}
+wd=${pwd#$HOME/}
+if [ "${wd}" = "$HOME" ]
+then
+	# right in home
+	echo "~"
+elif [ "${wd:0:1}" = "/" ]
+then
+	# not in home
+	echo "$pwd"
+else
+	# in substring of home
+	echo "~/$wd"
+fi
