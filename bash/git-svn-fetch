@@ -1,14 +1,23 @@
 #!/bin/bash
 
+echo $(date +"%Y-%m-%d %H:%M:%S")
 cd "$2" > /dev/null
 result=$(git svn fetch | tee -a /dev/stdout | wc -l)
 if [ $result -gt 0 ]; then
 	forward=$(git log --oneline remotes/trunk..master | wc -l)
+	target=$(git svn find-rev remotes/trunk)
 	if [ $forward -gt 0 ]; then
-		notify-send "SVN - $1" "Fetch has moved trunk ($forward rev), please rebase before dcommit !!" -t 0 -i /usr/share/zenity/zenity-notification.png
+		message="Fetch has moved trunk ($target rev), please rebase before dcommit !!"
+		echo $message
+		notify-send "SVN - $1" "$message" -t 0 -i /usr/share/zenity/zenity-notification.png
 	else
-		notify-send "SVN - $1" "Fetch has moved trunk ($forward rev)"
+		message="Fetch has moved trunk ($target rev)"
+		echo $message
+		notify-send "SVN - $1" "$message"
 	fi
+else
+	echo "Nothing to do."
 fi
+echo "-------------------"
 cd - > /dev/null
 
