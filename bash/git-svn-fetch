@@ -1,0 +1,14 @@
+#!/bin/bash
+
+cd "$2" > /dev/null
+result=$(git svn fetch | tee -a /dev/stdout | wc -l)
+if [ $result -gt 0 ]; then
+	forward=$(git log --oneline remotes/trunk..master | wc -l)
+	if [ $forward -gt 0 ]; then
+		notify-send "SVN - $1" "Fetch has moved trunk ($forward rev), please rebase before dcommit !!" -t 0 -i /usr/share/zenity/zenity-notification.png
+	else
+		notify-send "SVN - $1" "Fetch has moved trunk ($forward rev)"
+	fi
+fi
+cd - > /dev/null
+
