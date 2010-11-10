@@ -7,13 +7,14 @@ if [ $result -gt 0 ]; then
 	forward=$(git log --oneline remotes/trunk..master | wc -l)
 	target=$(git svn find-rev remotes/trunk)
 	if [ $forward -gt 0 ]; then
-		message="Fetch has moved trunk ($target rev), please rebase before dcommit !!"
-		echo $message
+		message="Fetch has moved trunk (revision $target), please rebase before dcommit..."
+		echo "$message"
 		notify-send "SVN - $1" "$message" -t 0 -i /usr/share/zenity/zenity-notification.png
+		zenity --notification  --window-icon="info" zenity --notification --window-icon="info" --text="$message" &
 	else
-		message="Fetch has moved trunk ($target rev)"
-		echo $message
-		notify-send "SVN - $1" "$message"
+		message="Fetch has moved trunk (revision $target)"
+		echo "$message"
+		notify-send -t 30 "SVN - $1" "$message"
 	fi
 else
 	echo "Nothing to do."
