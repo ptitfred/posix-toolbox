@@ -9,12 +9,12 @@ if [ $result -gt 0 ]; then
 	if [ $forward -gt 0 ]; then
 		message="Fetch has moved trunk (revision $target), please rebase before dcommit..."
 		echo "$message"
-		notify-send "SVN - $1" "$message" -t 0 -i /usr/share/zenity/zenity-notification.png
+		notify-send "SVN - $1" "$message" -t 0 -i ~/bin/bash/svn-square.jpg
 		zenity --notification  --window-icon="info" zenity --notification --window-icon="info" --text="$message" &
 	else
-		message="Fetch has moved trunk (revision $target)"
+		message="Fetch has moved trunk (revision $target):"
 		echo "$message"
-		notify-send -t 30 "SVN - $1" "$message"
+		notify-send -t 30 "SVN - $1" "$message" -i ~/bin/bash/svn-square.jpg
 	fi
 else
 	echo "Nothing to do."
