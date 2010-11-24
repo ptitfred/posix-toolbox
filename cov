@@ -1,0 +1,4 @@
+#!/bin/bash
+
+screen -t cobertura bash -c "mvn clean test cobertura:cobertura && notify-send 'Done' || (notify-send 'KO';read)"
+
