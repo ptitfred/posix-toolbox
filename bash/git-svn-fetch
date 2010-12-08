@@ -2,7 +2,7 @@
 
 echo $(date +"%Y-%m-%d %H:%M:%S")
 cd "$2" > /dev/null
-result=$(git svn fetch | tee -a /dev/stdout | wc -l)
+result=$(git svn fetch --parent | tee -a /dev/stdout | wc -l)
 if [ $result -gt 0 ]; then
 	forward=$(git log --oneline remotes/trunk..master | wc -l)
 	target=$(git svn find-rev remotes/trunk)
