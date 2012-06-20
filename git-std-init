@@ -1,14 +1,19 @@
 #!/bin/bash -e
 
+function lastArgument {
+	local args=$*
+	if [ $# -gt 0 ]
+	then
+		argCount=$(($# - 1 ))
+		shift $argCount
+		echo $1
+	else
+		return 1
+	fi
+}
+
 args=$*
-if [ $# -gt 0 ]
-then
-	argCount=$(($# - 1 ))
-	shift $argCount
-	directory=$1
-else
-	directory=.
-fi
+directory=$(lastArgument $* || echo ".")
 
 git init $args
 cd $directory
