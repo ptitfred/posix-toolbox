@@ -1,0 +1,20 @@
+#!/bin/bash -e
+
+args=$*
+if [ $# -gt 0 ]
+then
+	argCount=$(($# - 1 ))
+	shift $argCount
+	directory=$1
+else
+	directory=.
+fi
+
+git init $args
+cd $directory
+git commit -m "First empty commit" --allow-empty
+git branch base
+git branch --set-upstream master base
+
+cd - >/dev/null
+
