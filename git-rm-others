@@ -1,0 +1,9 @@
+#!/bin/bash
+
+RM_OPTIONS=$*
+
+files=$(git ls-files -o --exclude-standard)
+if [[ $(echo $files | wc -w ) -gt 0 ]]; then
+	rm $RM_OPTIONS $files
+fi
+
