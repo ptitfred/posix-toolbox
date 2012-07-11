@@ -196,5 +196,5 @@ fi
 }
 
 # En fait l'important ici c'est le "\033[1;32m\]$(__git_ps1)\[\033[0m\]", le reste c'est mon prompt usuel…
-export PS1='\[\033[0;37m\]\u@\h:\[\033[0;33m\]$(__pwd)\[\033[0m\]\[\033[1;32m\]$(__git_ps1)\[\033[0m\]$(__ampl) \$ '
+export PS1='\h.\[\033[0;96m\]\u\[\033[0m\] \[\033[0;33m\]$(__pwd)\[\033[0m\]\[\033[1;32m\]$(__git_ps1)\[\033[0m\]$(__ampl) \$ '
 
