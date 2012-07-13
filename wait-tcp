@@ -60,6 +60,6 @@ do
   sleep $SLEEP
 done
 
-OWNER=$(fuser $PORT/tcp 2>/dev/null | sed -e 's/\s*//g')
+OWNER=$(fuser $PORT/tcp 2>/dev/null | sed -e 's/^.* \([0-9]*\)$/\1/')
 echo "$OWNER"
 
