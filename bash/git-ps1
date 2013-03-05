@@ -56,6 +56,7 @@ __git_ps1 ()
   local g="$(__gitdir)"
   if [ -n "$g" ]; then
     local disable="$(git config --local --int --get ps1.disable)"
+    local shorten="$(git config --int --get ps1.shorten)"
     if [ "$disable" = "1" ]; then
       git_pwd=$(git pwd)
       printf " (%s:%s) " "-" "${git_pwd}"
@@ -138,16 +139,24 @@ __git_ps1 ()
            fi
         fi
       fi
+
+      local branch_name=${b##refs/heads/}
+      if [ "$shorten" == "1" ]; then
+        branch_name=$(short-path ${b##refs/heads/})
+      fi
   
       if [ -n "${1-}" ]; then
-        printf "$1" "$c${b##refs/heads/}$w$i$s$u$r"
+        printf "$1" "$c$branch_name$w$i$s$u$r"
       else
-  	git_pwd=$(git pwd)
-  	if [ "true" = "$(git rev-parse --is-inside-work-tree 2>/dev/null)" ]; then
-  		printf " (%s:%s)" "$c${b##refs/heads/}$w$i$s$u$r" "${git_pwd}"
-  	else
-  		printf " (%s)" "$c${b##refs/heads/}$w$i$s$u$r" 
-  	fi
+        git_pwd=$(git pwd)
+        if [ "$shorten" == "1" ]; then
+          git_pwd=$(short-path $git_pwd)
+        fi
+        if [ "true" = "$(git rev-parse --is-inside-work-tree 2>/dev/null)" ]; then
+          printf " (%s:%s)" "$c$branch_name$w$i$s$u$r" "${git_pwd}"
+        else
+          printf " (%s)" "$c$branch_name$w$i$s$u$r"
+        fi
       fi
     fi
   fi
@@ -156,12 +165,16 @@ __git_ps1 ()
 export GIT_PS1_SHOWDIRTYSTATE=1 GIT_PS1_SHOWUNTRACKEDFILES=1 GIT_PS1_SHOWSTASHSTATE=1
 
 __pwd() {
-if [ "true" == "$(git rev-parse --is-inside-work-tree 2>/dev/null)" ]; then
-	printf "$(git prd)"
-else
-	printf "$(prd)"
-fi
-
+  local shorten="$(git config --int --get ps1.shorten)"
+  local in_git_repo="$(git rev-parse --is-inside-work-tree 2>/dev/null)"
+  local path="$(prd)"
+  if [ "true" == "$in_git_repo" ]; then
+    path="$(git prd)"
+  fi
+  if [ "1" == "$shorten" ]; then
+    path="$(short-path $path)"
+  fi
+  printf "%s" "$path"
 }
 
 
