@@ -209,5 +209,27 @@ fi
 }
 
 # En fait l'important ici c'est le "\033[1;32m\]$(__git_ps1)\[\033[0m\]", le reste c'est mon prompt usuel…
-export PS1='\h.\[\033[0;96m\]\u\[\033[0m\] \[\033[0;33m\]$(__pwd)\[\033[0m\]\[\033[1;32m\]$(__git_ps1)\[\033[0m\]$(__ampl) \$ '
+now() {
+	date +%H:%M
+}
 
+find-up() {
+	local filename=$1
+	if [ -r $filename ]; then
+		echo $filename
+	fi
+}
+
+update_tmux_title() {
+	local tmux_title_file=$(find-up .tmux-title)
+	if [ -n "$tmux_title_file" ]; then
+		name=$(head -1 < $tmux_title_file)
+		printf "\033k$name\033\\"
+	fi
+}
+
+color() {
+	printf "\033[$1m"
+}
+
+export PS1='$(update_tmux_title)\[$(color "0;237")\]$(now)\[$(color "0")\] \[$(color "0;96")\]\u\[$(color "0")\] \[$(color "0;33")\]$(__pwd)\[$(color "0")\]\[$(color "1;32")\]$(__git_ps1)\[$(color "0")\]\[$(__ampl)\] $ '
