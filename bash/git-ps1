@@ -194,8 +194,8 @@ if [ "true" == "$(git rev-parse --is-inside-work-tree 2>/dev/null)" ]; then
 		if [ $ampl -gt $threshold ]; then
 			color="1;31"
 		fi
-		echo -en "\033[${color}m"
-		printf " %s" "$ampl"
+		echo -en " ∓\033[${color}m"
+		printf "%s" "$ampl"
 		echo -en "\033[0m"
 	fi
 	local newLines=$(git ls-files -o --exclude-standard  | xargs cat | wc -l)
