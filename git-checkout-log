@@ -1,0 +1,16 @@
+#!/bin/bash
+
+function list {
+  git log -g --grep-reflog="checkout: moving" --pretty=format:"%gs" | \
+    sed "s/^checkout: moving from \(.*\) to \(.*\)$/\2/"
+}
+
+if [ "$1" != "" ]; then
+  if [ "$1" == "--all" ]; then
+    list | less
+  else
+    list | head $1
+  fi
+else
+  list | head -10
+fi
