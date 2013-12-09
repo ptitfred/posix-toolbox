@@ -2,8 +2,11 @@
 
 RM_OPTIONS=$*
 
-files=$(git ls-files -o --exclude-standard)
-if [[ $(echo $files | wc -w ) -gt 0 ]]; then
-	rm $RM_OPTIONS $files
-fi
+ls_others() {
+  git ls-files -o --exclude-standard
+}
 
+files=$(ls_others)
+if [[ $(echo $files | wc -w ) -gt 0 ]]; then
+  ls_others | xargs -d "\n" rm $RM_OPTIONS
+fi
