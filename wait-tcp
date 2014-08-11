@@ -46,8 +46,22 @@ function checkTimeout {
 	fi
 }
 
+function getPortForOS() {
+	case "$OSTYPE" in
+		darwin* )  lsof -n -i4TCP:${PORT} | grep LISTEN ;;
+		*       )  fuser $PORT/tcp ;;
+	esac
+}
+
+function getOwnerForOS() {
+	case "$OSTYPE" in
+		darwin* )  getPortForOS | awk '{print $3}' ;;
+		*       )  getPortForOS | sed -e 's/^.* \([0-9]*\)$/\1/' ;;
+	esac
+}
+
 function checkPort {
-	fuser $PORT/tcp 2>/dev/null | wc -c
+	getPortForOS 2>/dev/null | wc -c
 }
 
 if [ $(checkPort) = 0 -a $VERBOSE -eq 1 ]; then
@@ -60,6 +74,5 @@ do
   sleep $SLEEP
 done
 
-OWNER=$(fuser $PORT/tcp 2>/dev/null | sed -e 's/^.* \([0-9]*\)$/\1/')
-echo "$OWNER"
+getOwnerForOS
 
