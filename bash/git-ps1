@@ -196,8 +196,16 @@ find-up() {
 	fi
 }
 
+update_tmux_title() {
+	local tmux_title_file=$(find-up .tmux-title)
+	if [ -n "$tmux_title_file" ]; then
+		name=$(head -1 < $tmux_title_file)
+		printf "\033k$name\033\\"
+	fi
+}
+
 color() {
 	printf "\033[$1m"
 }
 
-PS1='\[$(color "0;237")\]$(now)\[$(color "0")\] \[$(color "0;96")\]\u\[$(color "0")\] \[$(color "0;33")\]$(__pwd)\[$(color "0")\]\[$(color "1;32")\]$(__git_ps1)\[$(color "0")\] $ '
+PS1='$(update_tmux_title)\[$(color "0;237")\]$(now)\[$(color "0")\] \[$(color "0;96")\]\u\[$(color "0")\] \[$(color "0;33")\]$(__pwd)\[$(color "0")\]\[$(color "1;32")\]$(__git_ps1)\[$(color "0")\] $ '
