@@ -1,13 +1,18 @@
-#!/bin/bash -e
+#!/usr/bin/env -S bash -e
 
 function log {
 	git --no-pager log --oneline --decorate --graph "$@"
 }
 
+function find_pushable_head {
+  local pattern=$1
+  git log --oneline "HEAD@{u}.." | sed "/${pattern}/d" | head -1 | cut -d" " -f1
+}
+
 filter_pattern=$(git config bubbles.pattern || echo "--")
 mine=$(git config bubbles.remote-name || echo "origin")
 
-commit=$(git find-pushable-head "$filter_pattern")
+commit=$(find_pushable_head "$filter_pattern")
 branch_name=$(git rev-parse --symbolic-full-name HEAD | sed 's-^refs/heads/--')
 
 push_command="git push $mine $commit:$branch_name --force"

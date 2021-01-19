@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 (echo 0; git diff --stat | tail -1 | sed -e 's/,/\n/g' | \
 	cut -d" " -f2 | tail -2) | xargs | sed 's/ /+/g' | bc -l
