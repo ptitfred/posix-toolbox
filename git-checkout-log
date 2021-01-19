@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 function list {
   git log -g --grep-reflog="checkout: moving" --pretty=format:"%gs" | \

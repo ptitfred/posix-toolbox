@@ -1,4 +1,0 @@
-#!/bin/bash -e
-
-pattern=$1
-git log --oneline "HEAD@{u}.." | sed "/${pattern}/d" | head -1 | cut -d" " -f1
