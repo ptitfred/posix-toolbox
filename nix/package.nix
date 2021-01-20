@@ -1,22 +1,19 @@
-{ stdenv, lib }:
+{ stdenv, lib, makeWrapper }:
 
-script: buildInputs: description:
+script: inputs: description:
   stdenv.mkDerivation rec {
     name = "posix-toolbox-" + script;
 
     src = ./..;
 
-    inherit buildInputs;
+    buildInputs = inputs ++ [ makeWrapper ] ;
 
-    installPhase = ''
-      mkdir -p $out/bin
-      cp $src/${script} $out/bin/${script}
-    '';
-
-    postFixup =
-      let runtimePath = lib.makeBinPath buildInputs;
+    installPhase =
+      let runtimePath = lib.makeBinPath inputs;
        in ''
-            sed -i "2 i export PATH=${runtimePath}:\$PATH" $out/bin/${script}
+            mkdir -p $out/bin
+            cp $src/${script} $out/bin/${script}
+            wrapProgram $out/bin/${script} --prefix PATH : "${runtimePath}"
           '';
 
     meta = {
