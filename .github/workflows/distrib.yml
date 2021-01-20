@@ -1,9 +1,9 @@
-name: "nix"
+name: "distrib"
 on:
   pull_request:
   push:
 jobs:
-  tests:
+  packaging:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2.3.4
