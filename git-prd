@@ -28,7 +28,7 @@ gd=$(git rev-parse --git-dir 2>/dev/null)
 root=${gd%/.git}
 if [[ $root == ".git" ]]
 then
-	echo "$(prd)"
+	prd
 else
-	echo $(prd $root)
+	prd "$root"
 fi

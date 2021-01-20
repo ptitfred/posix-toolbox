@@ -27,13 +27,13 @@
 range=$1
 regex=$2
 
-commits=$(git rev-list --reverse --abbrev $range | xargs)
+commits=$(git rev-list --reverse --abbrev "$range" | xargs)
 for c in ${commits}
 do
-	occurs=$(git show $c | grep $regex | grep "^+" | wc -l);
-	if [ $occurs -gt 0 ]
+	occurs=$(git show "$c" | grep "$regex" | grep -c "^+");
+	if [ "$occurs" -gt 0 ]
 	then
-		git log --oneline -1 $c
+		git log --oneline -1 "$c"
 	fi
 done
 

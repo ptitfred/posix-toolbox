@@ -14,7 +14,7 @@ if [ $# -eq 0 ]; then
 fi
 
 VERBOSE=0
-if [ $1 = "-v" ]; then
+if [ "$1" = "-v" ]; then
 	VERBOSE=1
 	shift 1
 fi
@@ -36,10 +36,10 @@ function now {
 startTime=$(now)
 
 function checkTimeout {
-	if [ $TIMEOUT -gt 0 ]; then
+	if [ "$TIMEOUT" -gt 0 ]; then
 		current=$(now)
-		elapsed=$(( $current - $startTime ))
-		if [ $elapsed -ge $TIMEOUT ]; then
+		elapsed=$(( current - startTime ))
+		if [ $elapsed -ge "$TIMEOUT" ]; then
 			echo "Timeout" >&2
 			exit 2
 		fi
@@ -48,8 +48,8 @@ function checkTimeout {
 
 function getPortForOS() {
 	case "$OSTYPE" in
-		darwin* )  lsof -n -i4TCP:${PORT} | grep LISTEN ;;
-		*       )  fuser $PORT/tcp ;;
+		darwin* )  lsof -n -i4TCP:"${PORT}" | grep LISTEN ;;
+		*       )  fuser "$PORT"/tcp ;;
 	esac
 }
 
@@ -64,11 +64,11 @@ function checkPort {
 	getPortForOS 2>/dev/null | wc -c
 }
 
-if [ $(checkPort) = 0 -a $VERBOSE -eq 1 ]; then
+if [ "$(checkPort)" = 0 ] && [ $VERBOSE -eq 1 ]; then
 	echo "Waiting for TCP port $PORT"
 fi
 
-while [ $(checkPort) = 0 ]
+while [ "$(checkPort)" = 0 ]
 do
   checkTimeout
   sleep $SLEEP

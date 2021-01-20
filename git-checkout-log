@@ -9,7 +9,7 @@ if [ "$1" != "" ]; then
   if [ "$1" == "--all" ]; then
     list | less
   else
-    list | head $1
+    list | head "$1"
   fi
 else
   list | head -10

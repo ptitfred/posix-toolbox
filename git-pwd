@@ -31,5 +31,5 @@ if [[ $root == ".git" ]]
 then
 	echo "/"
 else
-	echo ${wd##${root}}
+	echo "${wd##${root}}"
 fi

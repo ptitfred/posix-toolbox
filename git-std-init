@@ -7,17 +7,17 @@ function lastArgument {
 	then
 		argCount=$(($# - 1 ))
 		shift $argCount
-		echo $1
+		echo "$1"
 	else
 		return 1
 	fi
 }
 
 args=$*
-directory=$(lastArgument $* || echo ".")
+directory=$(lastArgument "$@" || echo ".")
 
-git init $args
-cd $directory
+git init "$args"
+cd "$directory"
 git commit -m "First empty commit" --allow-empty
 git branch base
 git branch --set-upstream master base

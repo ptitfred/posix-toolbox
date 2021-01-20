@@ -7,6 +7,6 @@ ls_others() {
 }
 
 files=$(ls_others)
-if [[ $(echo $files | wc -w ) -gt 0 ]]; then
-  ls_others | xargs -d "\n" rm $RM_OPTIONS
+if [[ $(echo "$files" | wc -w ) -gt 0 ]]; then
+  ls_others | xargs -d "\n" rm "$RM_OPTIONS"
 fi
