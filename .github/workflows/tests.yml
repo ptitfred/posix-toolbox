@@ -1,4 +1,4 @@
-name: "distrib"
+name: "tests"
 on:
   pull_request:
   push:
@@ -11,3 +11,11 @@ jobs:
       with:
         nix_path: nixpkgs=channel:nixos-unstable
     - run: nix-build nix/release.nix
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2.3.4
+    - uses: cachix/install-nix-action@v12
+      with:
+        nix_path: nixpkgs=channel:nixos-unstable
+    - run: nix-shell -p shellcheck --command tests/lint.sh
