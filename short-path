@@ -1,3 +1,4 @@
 #!/usr/bin/env bash
 
-echo $1 | sed -e 's-\([^/]\)[^/]*/-\1/-g'
+# shellcheck disable=SC2001
+echo "$1" | sed -e 's-\([^/]\)[^/]*/-\1/-g'

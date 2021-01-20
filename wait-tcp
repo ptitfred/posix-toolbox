@@ -1,22 +1,22 @@
 #!/usr/bin/env bash
 
 function help {
-	echo "Usage: wait-for (-v) port [timeout]"
-	echo "       port is a TCP port number, or the service name (for instance http, ssh)"
-	echo "       timeout is expressed in seconds"
-	echo "             optional (defaulted to 30)"
-	echo "             if <= 0, no timeout"
-	exit 1
+  echo "Usage: wait-for (-v) port [timeout]"
+  echo "       port is a TCP port number, or the service name (for instance http, ssh)"
+  echo "       timeout is expressed in seconds"
+  echo "             optional (defaulted to 30)"
+  echo "             if <= 0, no timeout"
+  exit 1
 }
 
 if [ $# -eq 0 ]; then
-	help
+  help
 fi
 
 VERBOSE=0
-if [ $1 = "-v" ]; then
-	VERBOSE=1
-	shift 1
+if [ "$1" = "-v" ]; then
+  VERBOSE=1
+  shift 1
 fi
 
 PORT=$1
@@ -24,55 +24,54 @@ PORT=$1
 # timeout in seconds
 TIMEOUT=30
 if [ $# -ge 2 ]; then
-	TIMEOUT=$2
+  TIMEOUT=$2
 fi
 
 SLEEP=1s
 
 function now {
-	date +%s
+  date +%s
 }
 
 startTime=$(now)
 
 function checkTimeout {
-	if [ $TIMEOUT -gt 0 ]; then
-		current=$(now)
-		elapsed=$(( $current - $startTime ))
-		if [ $elapsed -ge $TIMEOUT ]; then
-			echo "Timeout" >&2
-			exit 2
-		fi
-	fi
+  if [ "$TIMEOUT" -gt 0 ]; then
+    current=$(now)
+    elapsed=$(( current - startTime ))
+    if [ $elapsed -ge "$TIMEOUT" ]; then
+      echo "Timeout" >&2
+      exit 2
+    fi
+  fi
 }
 
 function getPortForOS() {
-	case "$OSTYPE" in
-		darwin* )  lsof -n -i4TCP:${PORT} | grep LISTEN ;;
-		*       )  fuser $PORT/tcp ;;
-	esac
+  case "$OSTYPE" in
+    darwin* )  lsof -n -i4TCP:"${PORT}" | grep LISTEN ;;
+    *       )  fuser "$PORT"/tcp ;;
+  esac
 }
 
 function getOwnerForOS() {
-	case "$OSTYPE" in
-		darwin* )  getPortForOS | awk '{print $3}' ;;
-		*       )  getPortForOS | sed -e 's/^.* \([0-9]*\)$/\1/' ;;
-	esac
+  case "$OSTYPE" in
+    darwin* )  getPortForOS | awk '{print $3}' ;;
+    *       )  getPortForOS | sed -e 's/^.* \([0-9]*\)$/\1/' ;;
+  esac
 }
 
 function checkPort {
-	getPortForOS 2>/dev/null | wc -c
+  getPortForOS 2>/dev/null | wc -c
 }
 
-if [ $(checkPort) = 0 -a $VERBOSE -eq 1 ]; then
-	echo "Waiting for TCP port $PORT"
+if [ "$(checkPort)" = 0 ] && [ $VERBOSE -eq 1 ]; then
+  echo "Waiting for TCP port $PORT"
 fi
 
-while [ $(checkPort) = 0 ]
+while [ "$(checkPort)" = 0 ]
 do
   checkTimeout
   sleep $SLEEP
 done
 
 getOwnerForOS
-

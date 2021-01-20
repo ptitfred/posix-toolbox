@@ -29,17 +29,16 @@ if [ "$#" = "0" ]; then
 else
 	pwd=$1
 fi
-home=${HOME}
 wd=${pwd#$HOME/}
 if [ "${wd}" = "$HOME" ]
 then
 	# right in home
-	echo "~"
+	echo "$HOME"
 elif [ "${wd:0:1}" = "/" ]
 then
 	# not in home
 	echo "$pwd"
 else
 	# in substring of home
-	echo "~/$wd"
+	echo "$HOME/$wd"
 fi

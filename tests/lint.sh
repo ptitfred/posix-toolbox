@@ -2,7 +2,7 @@
 
 set -e
 
-shellcheck --severity=error \
+shellcheck \
   git-authors \
   git-backup \
   git-bubbles \

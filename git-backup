@@ -24,10 +24,10 @@
 # THE SOFTWARE.
 #==============================================================================
 
-remote=$(git remote -v | grep $1 | grep push | cut -b5- | cut -d" " -f1)
+remote=$(git remote -v | grep "$1" | grep push | cut -b5- | cut -d" " -f1)
 
 echo "Pushing branches on $1 ($remote)"
-git push --all $1	| sed -e 's/^/[branches] /'
+git push --all "$1"	| sed -e 's/^/[branches] /'
 echo "Pushing tags on $1 ($remote)"
-git push --tags $1	| sed -e 's/^/[tags] /'
+git push --tags "$1"	| sed -e 's/^/[tags] /'
 
