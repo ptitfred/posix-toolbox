@@ -9,7 +9,8 @@ jobs:
     - uses: cachix/install-nix-action@v12
       with:
         nix_path: nixpkgs=channel:nixos-unstable
-    - run: nix-build nix/release.nix
+    - id: packaging
+      run: nix-build nix/release.nix
 
   lint:
     runs-on: ubuntu-latest
@@ -18,7 +19,8 @@ jobs:
     - uses: cachix/install-nix-action@v12
       with:
         nix_path: nixpkgs=channel:nixos-unstable
-    - run: nix-shell --command tests/lint.sh
+    - id: lint
+      run: nix-shell --command tests/lint.sh
 
   spell:
     runs-on: ubuntu-latest
@@ -27,4 +29,5 @@ jobs:
     - uses: cachix/install-nix-action@v12
       with:
         nix_path: nixpkgs=channel:nixos-unstable
-    - run: nix-shell --command tests/spell.sh
+    - id: spell
+      run: nix-shell --command tests/spell.sh
