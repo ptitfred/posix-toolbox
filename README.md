@@ -2,7 +2,7 @@
 
 ![tests](https://github.com/ptitfred/posix-toolbox/workflows/tests/badge.svg)
 
-Copyright &copy; 2010-, Frédéric Menou. Licensed under [MIT License].
+Copyright &copy; 2010-, Frédéric Menou and Céline Louvet. Licensed under [MIT License].
 
 ## About
 
