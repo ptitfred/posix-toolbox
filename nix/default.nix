@@ -5,6 +5,7 @@ in {
      git-authors      = packageScript "git-authors"      [ findutils git gnused  ] "A git script to list committers other a commit range";
      git-bubbles      = packageScript "git-bubbles"      [ git gnused            ] "A git script to handle pull requests";
      git-checkout-log = packageScript "git-checkout-log" [ git                   ] "A git script to browser reflog and follow checkouts";
+     git-rm-others    = packageScript "git-rm-others"    [ findutils git         ] "A git script to clean the working copy from untracked files";
      git-search       = packageScript "git-search"       [ findutils git gnugrep ] "A git script to search the diff other a commit range";
      git-short        = packageScript "git-short"        [ git                   ] "A git script to display short SHA1 of a given commit";
      wait-tcp         = packageScript "wait-tcp"         [ coreutils gawk gnugrep gnused lsof psmisc ] # FIXME: make buildInputs dependent on the target system (darwin vs linux)
