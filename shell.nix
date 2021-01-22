@@ -3,5 +3,5 @@
 
 let aspell = pkgs.aspellWithDicts (d: [d.en]);
  in pkgs.mkShell {
-      buildInputs = [ aspell pkgs.shellcheck ];
+      buildInputs = [ aspell pkgs.git pkgs.shellcheck ];
     }
