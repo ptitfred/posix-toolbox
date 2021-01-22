@@ -78,7 +78,7 @@ I would recommend you to use home-manager instead, in which case you would like 
 
 ### From sources
 
-:warning: **With 2.0 release, it's not untested and at your own risk.** I will only use Nix from now on.
+:warning: **With 2.0 release, it's untested and at your own risk.** I will only use Nix from now on.
 
 You still have the old-school approach to checkout the sources and add it to your PATH:
 
