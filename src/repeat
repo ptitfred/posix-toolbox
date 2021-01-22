@@ -30,10 +30,10 @@ shift 1
 ec=0
 for i in $(seq 1 "$times")
 do
-	echo Attempt \#"$i"/"$times"
-	script -q -c "$*" /dev/null | sed -e 's/^/  /'
-	# shellcheck disable=SC2219
-	let "ec += $?"
+  echo Attempt \#"$i"/"$times"
+  script -q -c "$*" /dev/null | sed -e 's/^/  /'
+  # shellcheck disable=SC2219
+  let "ec += $?"
 done
 
 exit "$ec"
