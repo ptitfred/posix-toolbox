@@ -83,9 +83,9 @@ __git_ps1 ()
         elif [ -f "$g/BISECT_LOG" ]; then
           r="|BISECTING"
         fi
-  
+
         b="$(git symbolic-ref HEAD 2>/dev/null)" || {
-  
+
           b="$(
           case "${GIT_PS1_DESCRIBE_STYLE-}" in
           (contains)
@@ -97,19 +97,19 @@ __git_ps1 ()
           (* | default)
             git describe --exact-match HEAD ;;
           esac 2>/dev/null)" ||
-  
+
           b="$(cut -c1-7 "$g/HEAD" 2>/dev/null)..." ||
           b="unknown"
           b="($b)"
         }
       fi
-  
+
       local w
       local i
       local s
       local u
       local c
-  
+
       if [ "true" = "$(git rev-parse --is-inside-git-dir 2>/dev/null)" ]; then
         if [ "true" = "$(git rev-parse --is-bare-repository 2>/dev/null)" ]; then
           c="BARE:"
@@ -132,7 +132,7 @@ __git_ps1 ()
         if [ -n "${GIT_PS1_SHOWSTASHSTATE-}" ]; then
                 git rev-parse --verify refs/stash >/dev/null 2>&1 && s="$"
         fi
-  
+
         if [ -n "${GIT_PS1_SHOWUNTRACKEDFILES-}" ]; then
            if [ -n "$(git ls-files --others --exclude-standard)" ]; then
               u="%"
@@ -144,7 +144,7 @@ __git_ps1 ()
       if [ "$shorten" == "1" ]; then
         branch_name=$(short-path ${b##refs/heads/})
       fi
-  
+
       if [ -n "${1-}" ]; then
         printf "$1" "$c$branch_name$w$i$s$u$r"
       else
