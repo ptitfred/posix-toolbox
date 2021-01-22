@@ -60,7 +60,7 @@ __git_ps1 ()
     local disable="$(git config --local --int --get ps1.disable)"
     local shorten="$(git config --int --get ps1.shorten)"
     if [ "$disable" = "1" ]; then
-      git_pwd=$(git pwd)
+      git_pwd=$(git-pwd)
       printf " (%s:%s) " "-" "${git_pwd}"
     else
       local r
@@ -150,7 +150,7 @@ __git_ps1 ()
       if [ -n "${1-}" ]; then
         printf "$1" "$c$branch_name$w$i$s$u$r"
       else
-        git_pwd=$(git pwd)
+        git_pwd=$(git-pwd)
         if [ "$shorten" == "1" ]; then
           git_pwd=$(short-path $git_pwd)
         fi
@@ -171,7 +171,7 @@ __pwd() {
   local in_git_repo="$(git rev-parse --is-inside-work-tree 2>/dev/null)"
   local path="$(prd)"
   if [ "true" == "$in_git_repo" ]; then
-    path="$(git prd)"
+    path="$(git-prd)"
   fi
   if [ "1" == "$shorten" ]; then
     path="$(short-path $path)"
