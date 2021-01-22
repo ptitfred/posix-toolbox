@@ -11,9 +11,10 @@ let packageScript = callPackage ./package.nix {};
     git-short        = packageScript "git-short"        [ git                             ] "A git script to display short SHA1 of a given commit";
     git-std-init     = packageScript "git-std-init"     [ coreutils git                   ] "A git script to setup a repository with an initial empty commit and a base and master branches";
     prd              = packageScript "prd"              [ coreutils                       ] "A script to print the working directory relative to your HOME directory";
+    short-path       = packageScript "short-path"       [ coreutils gnused                ] "A script to abbreviate every directory unless the last part of a path";
     wait-tcp         = packageScript "wait-tcp"         [ coreutils gawk gnugrep gnused lsof psmisc ] # FIXME: make buildInputs dependent on the target system (darwin vs linux)
                          "A script to wait for some server sockets to be opened on a TCP";
 in {
-     inherit git-authors git-bubbles git-checkout-log git-prd git-pwd git-rm-others git-search git-short git-std-init prd wait-tcp;
+     inherit git-authors git-bubbles git-checkout-log git-prd git-pwd git-rm-others git-search git-short git-std-init prd short-path wait-tcp;
      ls-colors = callPackage ./ls-colors.nix {};
    }
