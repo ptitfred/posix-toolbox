@@ -37,6 +37,7 @@
 # Scavenged from Git 1.6.5.x contrib/completion/git_completion.bash
 # __git_ps1 accepts 0 or 1 arguments (i.e., format string)
 # returns text to add to bash PS1 prompt (includes branch name)
+# shellcheck disable=SC2120
 __gitdir ()
 {
   if [ -z "${1-}" ]; then
@@ -55,10 +56,13 @@ __gitdir ()
 }
 __git_ps1 ()
 {
-  local g="$(__gitdir)"
+  local g
+  g="$(__gitdir)"
   if [ -n "$g" ]; then
-    local disable="$(git config --local --int --get ps1.disable)"
-    local shorten="$(git config --int --get ps1.shorten)"
+    local disable
+    local shorten
+    disable="$(git config --local --int --get ps1.disable)"
+    shorten="$(git config --int --get ps1.shorten)"
     if [ "$disable" = "1" ]; then
       git_pwd=$(git-pwd)
       printf " (%s:%s) " "-" "${git_pwd}"
@@ -96,7 +100,7 @@ __git_ps1 ()
             git describe --contains --all HEAD ;;
           (describe)
             git describe HEAD ;;
-          (* | default)
+          (default | *)
             git describe --exact-match HEAD ;;
           esac 2>/dev/null)" ||
 
@@ -148,11 +152,12 @@ __git_ps1 ()
       fi
 
       if [ -n "${1-}" ]; then
-        printf "$1" "$c$branch_name$w$i$s$u$r"
+        # shellcheck disable=SC2059
+        printf "$1" "$c$branch_name$w$i$s$u$r" # FIXME: this printf expression is broken
       else
         git_pwd=$(git-pwd)
         if [ "$shorten" == "1" ]; then
-          git_pwd=$(short-path $git_pwd)
+          git_pwd=$(short-path "$git_pwd")
         fi
         if [ "true" = "$(git rev-parse --is-inside-work-tree 2>/dev/null)" ]; then
           printf " (%s:%s)" "$c$branch_name$w$i$s$u$r" "${git_pwd}"
@@ -171,14 +176,17 @@ prd_() {
 }
 
 __pwd() {
-  local shorten="$(git config --int --get ps1.shorten)"
-  local in_git_repo="$(git rev-parse --is-inside-work-tree 2>/dev/null)"
-  local path="$(prd_ )"
+  local shorten
+  local in_git_repo
+  local path
+  shorten="$(git config --int --get ps1.shorten)"
+  in_git_repo="$(git rev-parse --is-inside-work-tree 2>/dev/null)"
+  path="$(prd_ )"
   if [ "true" == "$in_git_repo" ]; then
     path="$(git-prd)"
   fi
   if [ "1" == "$shorten" ]; then
-    path="$(short-path $path)"
+    path="$(short-path "$path")"
   fi
   printf "%s" "$path"
 }
@@ -197,21 +205,22 @@ now() {
 
 find-up() {
   local filename=$1
-  if [ -r $filename ]; then
-    echo $filename
+  if [ -r "$filename" ]; then
+    echo "$filename"
   fi
 }
 
 update_tmux_title() {
-  local tmux_title_file=$(find-up .tmux-title)
+  local tmux_title_file
+  tmux_title_file=$(find-up .tmux-title)
   if [ -n "$tmux_title_file" ]; then
-    name=$(head -1 < $tmux_title_file)
-    printf "\033k$name\033\\"
+    name=$(head -1 < "$tmux_title_file")
+    printf "\033k%s\033\\" "$name"
   fi
 }
 
 color() {
-  printf "\033[$1m"
+  printf "\033[%sm" "$1"
 }
 
 PS1='$(update_tmux_title)\[$(color "0;237")\]$(now)\[$(color "0")\] \[$(color "0;96")\]\u\[$(color "0")\] \[$(color "0;33")\]$(__pwd)\[$(color "0")\]\[$(color "1;32")\]$(__git_ps1)\[$(color "0")\] $ '
