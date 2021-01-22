@@ -28,7 +28,7 @@
 # A ajouter dans votre ~/.bashrc :
 # TBX=$HOME/posix-toolbox # emplacement à choisir
 # PATH=$TBX/src:$PATH
-# GIT_BASH=$TBX/bash/git-ps1
+# GIT_BASH=$TBX/src/bash/git-ps1
 # if [ -f $GIT_BASH ]; then
 #   . $GIT_BASH
 # fi
