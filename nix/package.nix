@@ -4,7 +4,7 @@ script: inputs: description:
   stdenv.mkDerivation rec {
     name = "posix-toolbox-" + script;
 
-    src = ./..;
+    src = ./../src;
 
     buildInputs = inputs ++ [ makeWrapper ] ;
 
