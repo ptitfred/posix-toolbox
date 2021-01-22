@@ -9,6 +9,7 @@ in {
      git-rm-others    = packageScript "git-rm-others"    [ findutils git         ] "A git script to clean the working copy from untracked files";
      git-search       = packageScript "git-search"       [ findutils git gnugrep ] "A git script to search the diff other a commit range";
      git-short        = packageScript "git-short"        [ git                   ] "A git script to display short SHA1 of a given commit";
+     prd              = packageScript "prd"              [ coreutils             ] "A script to print the working directory relative to your HOME directory";
      wait-tcp         = packageScript "wait-tcp"         [ coreutils gawk gnugrep gnused lsof psmisc ] # FIXME: make buildInputs dependent on the target system (darwin vs linux)
                           "A script to wait for some server sockets to be opened on a TCP";
      ls-colors = callPackage ./ls-colors.nix {};
