@@ -33,12 +33,13 @@ wd=${pwd#$HOME/}
 if [ "${wd}" = "$HOME" ]
 then
 	# right in home
-	echo "$HOME"
+	echo "~"
 elif [ "${wd:0:1}" = "/" ]
 then
 	# not in home
 	echo "$pwd"
 else
 	# in substring of home
-	echo "$HOME/$wd"
+	# shellcheck disable=SC2088
+	echo "~/$wd"
 fi

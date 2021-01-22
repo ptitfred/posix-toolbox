@@ -4,7 +4,6 @@ set -e
 
 shellcheck \
   git-authors \
-  git-backup \
   git-bubbles \
   git-checkout-log \
   git-prd \

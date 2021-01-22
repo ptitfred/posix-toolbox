@@ -1,7 +1,7 @@
 { stdenv, coreutils, fetchFromGitHub }:
 
 stdenv.mkDerivation {
-  name = "ls-colors";
+  name = "posix-toolbox-ls-colors";
 
   src = fetchFromGitHub {
     owner = "trapd00r";

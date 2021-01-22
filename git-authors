@@ -29,5 +29,5 @@ if [ "$committees" == "" ]; then
 	committees=
 fi
 
-git log --format="\\\"%an\\\" <%ae>" "$committees" | sort | uniq | sed 's/^/, /' | xargs | cut -b3-
-
+# shellcheck disable=SC2086
+git log --format="\\\"%an\\\" <%ae>" $committees | sort | uniq | sed 's/^/, /' | xargs | cut -b3-
