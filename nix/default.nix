@@ -1,4 +1,4 @@
-{ callPackage, stdenv, lib, coreutils, findutils, gawk, git, gnugrep, gnused, less, lsof, psmisc, utillinux }:
+{ callPackage, coreutils, findutils, gawk, git, gnugrep, gnused, less, lsof, psmisc, utillinux }:
 
 let packageScript = callPackage ./package.nix {};
     git-authors      = packageScript "git-authors"      [ coreutils findutils git gnused  ] "A git script to list committers other a commit range";
