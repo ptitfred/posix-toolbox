@@ -25,21 +25,21 @@
 #==============================================================================
 
 if [ "$#" = "0" ]; then
-	pwd=$(pwd)
+  pwd=$(pwd)
 else
-	pwd=$1
+  pwd=$1
 fi
 wd=${pwd#$HOME/}
 if [ "${wd}" = "$HOME" ]
 then
-	# right in home
-	echo "~"
+  # right in home
+  echo "~"
 elif [ "${wd:0:1}" = "/" ]
 then
-	# not in home
-	echo "$pwd"
+  # not in home
+  echo "$pwd"
 else
-	# in substring of home
-	# shellcheck disable=SC2088
-	echo "~/$wd"
+  # in substring of home
+  # shellcheck disable=SC2088
+  echo "~/$wd"
 fi

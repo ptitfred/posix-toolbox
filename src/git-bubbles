@@ -27,7 +27,7 @@ set -e
 #==============================================================================
 
 function log {
-	git --no-pager log --oneline --decorate --graph "$@"
+  git --no-pager log --oneline --decorate --graph "$@"
 }
 
 function find_pushable_head {
@@ -44,66 +44,66 @@ branch_name=$(git rev-parse --symbolic-full-name HEAD | sed 's-^refs/heads/--')
 push_command="git push $mine $commit:$branch_name --force"
 
 function print_log {
-	if [[ ! $(git rev-parse HEAD) =~ ^$commit ]]; then
-		log "${commit}..HEAD"
-		echo "--------------------------------------------------"
-	fi
-	log "HEAD@{u}..$commit"
+  if [[ ! $(git rev-parse HEAD) =~ ^$commit ]]; then
+    log "${commit}..HEAD"
+    echo "--------------------------------------------------"
+  fi
+  log "HEAD@{u}..$commit"
 }
 
 function announce {
-	echo "$*"
-	"$@"
+  echo "$*"
+  "$@"
 }
 
 function print_status {
-	local command=$1
-	missing_branch=$(git rev-parse "$mine/$branch_name" >/dev/null 2>/dev/null || echo "1")
+  local command=$1
+  missing_branch=$(git rev-parse "$mine/$branch_name" >/dev/null 2>/dev/null || echo "1")
 
-	if [ "$missing_branch" == "1" ]; then
-		echo "Branch $branch_name not yet pushed on ${mine}. To create it:"
-		echo "git push $mine HEAD"
-	else
-		diff_stat=$(git diff --stat "$mine/$branch_name..$commit" 2>/dev/null | wc -c)
-		log_stat=$(git --no-pager log --oneline "$mine/$branch_name..$commit" 2>/dev/null | wc -l)
-		if [ "$diff_stat" != "0" ]; then
-			if [ "$command" == "execute" ]; then
-				$push_command
-			else
-				announce git diff -b -M "$mine/$branch_name..$commit" --stat
+  if [ "$missing_branch" == "1" ]; then
+    echo "Branch $branch_name not yet pushed on ${mine}. To create it:"
+    echo "git push $mine HEAD"
+  else
+    diff_stat=$(git diff --stat "$mine/$branch_name..$commit" 2>/dev/null | wc -c)
+    log_stat=$(git --no-pager log --oneline "$mine/$branch_name..$commit" 2>/dev/null | wc -l)
+    if [ "$diff_stat" != "0" ]; then
+      if [ "$command" == "execute" ]; then
+        $push_command
+      else
+        announce git diff -b -M "$mine/$branch_name..$commit" --stat
 
-				echo ""
-				echo "$push_command"
-			fi
-		elif [ "$log_stat" != "0" ]; then
-			echo "No diff but history diverged."
-			echo ""
-			if [ "$command" == "execute" ]; then
-				$push_command
-			else
-				echo "$push_command"
-			fi
-		else
-			echo "Nothing to push. We're good!"
-		fi
-	fi
+        echo ""
+        echo "$push_command"
+      fi
+    elif [ "$log_stat" != "0" ]; then
+      echo "No diff but history diverged."
+      echo ""
+      if [ "$command" == "execute" ]; then
+        $push_command
+      else
+        echo "$push_command"
+      fi
+    else
+      echo "Nothing to push. We're good!"
+    fi
+  fi
 }
 
 if [ "$1" == "push" ]; then
-	print_status execute
+  print_status execute
 
 elif [ "$1" == "diff" ]; then
-	shift 1
-	if [ "$diff_stat" != "0" ]; then
-		announce git diff -b -M "$mine/$branch_name..$commit" "$@"
-	fi
+  shift 1
+  if [ "$diff_stat" != "0" ]; then
+    announce git diff -b -M "$mine/$branch_name..$commit" "$@"
+  fi
 
 elif [ "$1" == "content" ]; then
-	shift 1
-	git diff --stat --patch -w -M "HEAD@{u}..$commit" "$@"
+  shift 1
+  git diff --stat --patch -w -M "HEAD@{u}..$commit" "$@"
 
 else
-	print_log
-	echo ""
-	print_status
+  print_log
+  echo ""
+  print_status
 fi

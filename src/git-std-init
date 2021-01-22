@@ -27,15 +27,15 @@
 set -e
 
 function lastArgument {
-	local args=$*
-	if [ $# -gt 0 ]
-	then
-		argCount=$(($# - 1 ))
-		shift $argCount
-		echo "$1"
-	else
-		return 1
-	fi
+  local args=$*
+  if [ $# -gt 0 ]
+  then
+    argCount=$(($# - 1 ))
+    shift $argCount
+    echo "$1"
+  else
+    return 1
+  fi
 }
 
 args=$*

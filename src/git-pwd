@@ -29,7 +29,7 @@ gd=$(git rev-parse --git-dir 2>/dev/null)
 root=${gd%/.git}
 if [[ $root == ".git" ]]
 then
-	echo "/"
+  echo "/"
 else
-	echo "${wd##${root}}"
+  echo "${wd##${root}}"
 fi
