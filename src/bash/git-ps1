@@ -166,10 +166,14 @@ __git_ps1 ()
 
 export GIT_PS1_SHOWDIRTYSTATE=1 GIT_PS1_SHOWUNTRACKEDFILES=1 GIT_PS1_SHOWSTASHSTATE=1
 
+prd_() {
+  prd "$@"
+}
+
 __pwd() {
   local shorten="$(git config --int --get ps1.shorten)"
   local in_git_repo="$(git rev-parse --is-inside-work-tree 2>/dev/null)"
-  local path="$(prd)"
+  local path="$(prd_ )"
   if [ "true" == "$in_git_repo" ]; then
     path="$(git-prd)"
   fi
