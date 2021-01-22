@@ -1,4 +1,4 @@
-{ callPackage, stdenv, lib, coreutils, findutils, gawk, git, gnugrep, gnused, less, lsof, psmisc }:
+{ callPackage, stdenv, lib, coreutils, findutils, gawk, git, gnugrep, gnused, less, lsof, psmisc, utillinux }:
 
 let packageScript = callPackage ./package.nix {};
     git-authors      = packageScript "git-authors"      [ coreutils findutils git gnused  ] "A git script to list committers other a commit range";
@@ -11,10 +11,11 @@ let packageScript = callPackage ./package.nix {};
     git-short        = packageScript "git-short"        [ git                             ] "A git script to display short SHA1 of a given commit";
     git-std-init     = packageScript "git-std-init"     [ coreutils git                   ] "A git script to setup a repository with an initial empty commit and a base and master branches";
     prd              = packageScript "prd"              [ coreutils                       ] "A script to print the working directory relative to your HOME directory";
+    repeat           = packageScript "repeat"           [ coreutils gnused utillinux      ] "A script to repeat a command some times";
     short-path       = packageScript "short-path"       [ coreutils gnused                ] "A script to abbreviate every directory unless the last part of a path";
     wait-tcp         = packageScript "wait-tcp"         [ coreutils gawk gnugrep gnused lsof psmisc ] # FIXME: make buildInputs dependent on the target system (darwin vs linux)
                          "A script to wait for some server sockets to be opened on a TCP";
 in {
-     inherit git-authors git-bubbles git-checkout-log git-prd git-pwd git-rm-others git-search git-short git-std-init prd short-path wait-tcp;
+     inherit git-authors git-bubbles git-checkout-log git-prd git-pwd git-rm-others git-search git-short git-std-init prd repeat short-path wait-tcp;
      ls-colors = callPackage ./ls-colors.nix {};
    }
