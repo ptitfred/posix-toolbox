@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 #==============================================================================
 # The MIT License
 #
@@ -26,15 +28,16 @@
 # A ajouter dans votre ~/.bashrc :
 # TBX=$HOME/posix-toolbox # emplacement à choisir
 # PATH=$TBX/src:$PATH
-# GIT_BASH=$TBX/bash/git-ps1
+# GIT_BASH=$TBX/src/bash/git-ps1
 # if [ -f $GIT_BASH ]; then
-# 	. $GIT_BASH
+#   . $GIT_BASH
 # fi
 
 
 # Scavenged from Git 1.6.5.x contrib/completion/git_completion.bash
 # __git_ps1 accepts 0 or 1 arguments (i.e., format string)
 # returns text to add to bash PS1 prompt (includes branch name)
+# shellcheck disable=SC2120
 __gitdir ()
 {
   if [ -z "${1-}" ]; then
@@ -53,12 +56,15 @@ __gitdir ()
 }
 __git_ps1 ()
 {
-  local g="$(__gitdir)"
+  local g
+  g="$(__gitdir)"
   if [ -n "$g" ]; then
-    local disable="$(git config --local --int --get ps1.disable)"
-    local shorten="$(git config --int --get ps1.shorten)"
+    local disable
+    local shorten
+    disable="$(git config --local --int --get ps1.disable)"
+    shorten="$(git config --int --get ps1.shorten)"
     if [ "$disable" = "1" ]; then
-      git_pwd=$(git pwd)
+      git_pwd=$(git-pwd)
       printf " (%s:%s) " "-" "${git_pwd}"
     else
       local r
@@ -83,9 +89,9 @@ __git_ps1 ()
         elif [ -f "$g/BISECT_LOG" ]; then
           r="|BISECTING"
         fi
-  
+
         b="$(git symbolic-ref HEAD 2>/dev/null)" || {
-  
+
           b="$(
           case "${GIT_PS1_DESCRIBE_STYLE-}" in
           (contains)
@@ -94,22 +100,22 @@ __git_ps1 ()
             git describe --contains --all HEAD ;;
           (describe)
             git describe HEAD ;;
-          (* | default)
+          (default | *)
             git describe --exact-match HEAD ;;
           esac 2>/dev/null)" ||
-  
+
           b="$(cut -c1-7 "$g/HEAD" 2>/dev/null)..." ||
           b="unknown"
           b="($b)"
         }
       fi
-  
+
       local w
       local i
       local s
       local u
       local c
-  
+
       if [ "true" = "$(git rev-parse --is-inside-git-dir 2>/dev/null)" ]; then
         if [ "true" = "$(git rev-parse --is-bare-repository 2>/dev/null)" ]; then
           c="BARE:"
@@ -132,7 +138,7 @@ __git_ps1 ()
         if [ -n "${GIT_PS1_SHOWSTASHSTATE-}" ]; then
                 git rev-parse --verify refs/stash >/dev/null 2>&1 && s="$"
         fi
-  
+
         if [ -n "${GIT_PS1_SHOWUNTRACKEDFILES-}" ]; then
            if [ -n "$(git ls-files --others --exclude-standard)" ]; then
               u="%"
@@ -144,13 +150,14 @@ __git_ps1 ()
       if [ "$shorten" == "1" ]; then
         branch_name=$(short-path ${b##refs/heads/})
       fi
-  
+
       if [ -n "${1-}" ]; then
-        printf "$1" "$c$branch_name$w$i$s$u$r"
+        # shellcheck disable=SC2059
+        printf "$1" "$c$branch_name$w$i$s$u$r" # FIXME: this printf expression is broken
       else
-        git_pwd=$(git pwd)
+        git_pwd=$(git-pwd)
         if [ "$shorten" == "1" ]; then
-          git_pwd=$(short-path $git_pwd)
+          git_pwd=$(short-path "$git_pwd")
         fi
         if [ "true" = "$(git rev-parse --is-inside-work-tree 2>/dev/null)" ]; then
           printf " (%s:%s)" "$c$branch_name$w$i$s$u$r" "${git_pwd}"
@@ -164,15 +171,22 @@ __git_ps1 ()
 
 export GIT_PS1_SHOWDIRTYSTATE=1 GIT_PS1_SHOWUNTRACKEDFILES=1 GIT_PS1_SHOWSTASHSTATE=1
 
+prd_() {
+  prd "$@"
+}
+
 __pwd() {
-  local shorten="$(git config --int --get ps1.shorten)"
-  local in_git_repo="$(git rev-parse --is-inside-work-tree 2>/dev/null)"
-  local path="$(prd)"
+  local shorten
+  local in_git_repo
+  local path
+  shorten="$(git config --int --get ps1.shorten)"
+  in_git_repo="$(git rev-parse --is-inside-work-tree 2>/dev/null)"
+  path="$(prd_ )"
   if [ "true" == "$in_git_repo" ]; then
-    path="$(git prd)"
+    path="$(git-prd)"
   fi
   if [ "1" == "$shorten" ]; then
-    path="$(short-path $path)"
+    path="$(short-path "$path")"
   fi
   printf "%s" "$path"
 }
@@ -181,31 +195,32 @@ __pwd() {
 DEFAULT_THRESHOLD=100
 
 function getThresholdFromConfiguration {
-	git config --int --get "check.threshold" || echo $DEFAULT_THRESHOLD
+  git config --int --get "check.threshold" || echo $DEFAULT_THRESHOLD
 }
 
 # En fait l'important ici c'est le "\033[1;32m\]$(__git_ps1)\[\033[0m\]", le reste c'est mon prompt usuel…
 now() {
-	date +%H:%M
+  date +%H:%M
 }
 
 find-up() {
-	local filename=$1
-	if [ -r $filename ]; then
-		echo $filename
-	fi
+  local filename=$1
+  if [ -r "$filename" ]; then
+    echo "$filename"
+  fi
 }
 
 update_tmux_title() {
-	local tmux_title_file=$(find-up .tmux-title)
-	if [ -n "$tmux_title_file" ]; then
-		name=$(head -1 < $tmux_title_file)
-		printf "\033k$name\033\\"
-	fi
+  local tmux_title_file
+  tmux_title_file=$(find-up .tmux-title)
+  if [ -n "$tmux_title_file" ]; then
+    name=$(head -1 < "$tmux_title_file")
+    printf "\033k%s\033\\" "$name"
+  fi
 }
 
 color() {
-	printf "\033[$1m"
+  printf "\033[%sm" "$1"
 }
 
 PS1='$(update_tmux_title)\[$(color "0;237")\]$(now)\[$(color "0")\] \[$(color "0;96")\]\u\[$(color "0")\] \[$(color "0;33")\]$(__pwd)\[$(color "0")\]\[$(color "1;32")\]$(__git_ps1)\[$(color "0")\] $ '
