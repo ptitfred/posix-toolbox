@@ -11,14 +11,23 @@ jobs:
         nix_path: nixpkgs=channel:nixos-20.09
     - run: nix-build nix/release.nix
 
-  lint:
+  lint-shell:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2.3.4
     - uses: cachix/install-nix-action@v12
       with:
         nix_path: nixpkgs=channel:nixos-20.09
-    - run: nix-shell --command tests/lint.sh
+    - run: nix-shell --command tests/lint-shell.sh
+
+  lint-nix:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2.3.4
+    - uses: cachix/install-nix-action@v12
+      with:
+        nix_path: nixpkgs=channel:nixos-20.09
+    - run: nix-shell --command tests/lint-nix.sh
 
   spell:
     runs-on: ubuntu-latest
