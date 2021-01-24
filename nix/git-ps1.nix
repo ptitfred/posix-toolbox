@@ -1,4 +1,4 @@
-{ stdenv, lib, makeWrapper, git, git-prd, git-pwd, prd, short-path }:
+{ stdenv, git, git-prd, git-pwd, prd, short-path }:
 
 let git-ps1 =
       stdenv.mkDerivation {
