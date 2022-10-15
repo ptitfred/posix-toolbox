@@ -52,11 +52,11 @@ let fetchPackage = owner: repo: path: rev: sha256:
       self.callPackage (self.fetchFromGitHub { inherit owner repo rev sha256; } + path) {};
 in {
      posix-toolbox = fetchPackage "ptitfred" "posix-toolbox" "/nix/default.nix"
-       "fd7cc9afaacfe673c1d125b6c86bfd2abf73b53d" "0xr91i4sggbd32z5wj8ar1lz7wpcvjjs86zcq0mc785720y8629k";
+       "d31128c1c8bbf7907534377633a43477c2e8d521" "lhkGUYuMvIsBJfHJEeitiH58Yh29h7ePgracCevtHHc=";
    }
 ```
 
-And letter install some scripts from the nix path:
+And later install some scripts from the nix path:
 
 ```bash
 nix-env -i -f '<nixpkgs>' posix-toolbox
@@ -73,6 +73,20 @@ I would recommend you to use home-manager instead, in which case you would like 
     posix-toolbox.git-checkout-log
     posix-toolbox.ls-colors
   ];
+}
+```
+
+You can also configure bash to use the PS1 provided by this project via home-manager too:
+
+```nix
+{ pkgs, ... }:
+
+{
+  programs.bash = {
+    initExtra = ''
+      source ${pkgs.posix-toolbox.git-ps1}/share/posix-toolbox/git-ps1
+    '';
+  };
 }
 ```
 
