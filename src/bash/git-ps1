@@ -223,4 +223,11 @@ color() {
   printf "\033[%sm" "$1"
 }
 
-PS1='$(update_tmux_title)\[$(color "0;237")\]$(now)\[$(color "0")\] \[$(color "0;96")\]\u\[$(color "0")\] \[$(color "0;33")\]$(__pwd)\[$(color "0")\]\[$(color "1;32")\]$(__git_ps1)\[$(color "0")\] $ '
+__nix_shell() {
+  if [ -n "$IN_NIX_SHELL" ]
+  then
+    echo " nix-shell"
+  fi
+}
+
+PS1='$(update_tmux_title)\[$(color "0;237")\]$(now)\[$(color "0")\] \[$(color "0;96")\]\u\[$(color "0")\] \[$(color "0;33")\]$(__pwd)\[$(color "0")\]\[$(color "1;32")\]$(__git_ps1)\[$(color "0")\]\[$(color "1;33")\]$(__nix_shell)\[$(color "0")\] $ '
