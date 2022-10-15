@@ -83,12 +83,34 @@ You can also configure bash to use the PS1 provided by this project via home-man
 
 {
   programs.bash = {
+    enable = true;
+
     initExtra = ''
       source ${pkgs.posix-toolbox.git-ps1}/share/posix-toolbox/git-ps1
     '';
   };
 }
 ```
+
+It's exactly the same for the ls-colors:
+
+```nix
+{ pkgs, ... }:
+
+{
+  programs.bash = {
+    enable = true;
+
+    initExtra = ''
+      source ${pkgs.posix-toolbox.ls-colors}/share/ls-colors/bash.sh
+    '';
+  };
+}
+```
+
+If you're curious about [home-manager](https://github.com/nix-community/home-manager)
+you can learn about it via [their official documentation](https://nix-community.github.io/home-manager)
+or by examples via [my own configuration](https://github.com/ptitfred/nixos-configuration).
 
 ### From sources
 
