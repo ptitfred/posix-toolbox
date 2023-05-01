@@ -21,6 +21,7 @@ A collection of script to add to your PATH:
 - [git-search](src/git-search), a git script to search the diff other a commit range
 - [git-short](src/git-short), a git script to display short SHA1 of a given commit
 - [git-std-init](src/git-std-init), a git script to setup a repository with an initial empty commit and a base and master branches
+- [git-tree](src/git-tree), a git script to tree files handled by git
 - [prd](src/prd), a script to print the working directory relative to your HOME directory
 - [repeat](src/repeat), a script to repeat a command some times
 - [short-path](src/short-path), a script to abbreviate every directory unless the last part of a path
