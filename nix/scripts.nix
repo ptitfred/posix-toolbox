@@ -1,4 +1,4 @@
-{ callPackage, coreutils, findutils, gawk, git, gnugrep, gnused, i3lock, imagemagick, less, lsof, psmisc, scrot, utillinux }:
+{ callPackage, coreutils, findutils, gawk, git, gnugrep, gnused, i3lock, imagemagick, less, lsof, psmisc, scrot, tree, utillinux }:
 
 let packageScript = callPackage ./package.nix {};
 in rec {
@@ -11,6 +11,7 @@ in rec {
      git-search       = packageScript "git-search"       [ findutils git gnugrep              ] "A git script to search the diff other a commit range";
      git-short        = packageScript "git-short"        [ git                                ] "A git script to display short SHA1 of a given commit";
      git-std-init     = packageScript "git-std-init"     [ coreutils git                      ] "A git script to setup a repository with an initial empty commit and a base and master branches";
+     git-tree         = packageScript "git-tree"         [ coreutils git tree                 ] "A git script to tree files handled by git";
      i3-screen-locker = packageScript "i3-screen-locker" [ coreutils i3lock imagemagick scrot ] "A variant of i3lock that take a screenshot to use as background of the lock screen";
      prd              = packageScript "prd"              [ coreutils                          ] "A script to print the working directory relative to your HOME directory";
      repeat           = packageScript "repeat"           [ coreutils gnused utillinux         ] "A script to repeat a command some times";
