@@ -9,34 +9,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-    - uses: cachix/install-nix-action@v18
-      with:
-        nix_path: nixpkgs=channel:nixos-20.09
-    - run: nix-build nix/release.nix
+    - uses: cachix/install-nix-action@v22
+    - run: nix build
 
-  lint-shell:
+  lint:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-    - uses: cachix/install-nix-action@v18
-      with:
-        nix_path: nixpkgs=channel:nixos-20.09
-    - run: nix-shell --command tests/lint-shell.sh
-
-  lint-nix:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v3
-    - uses: cachix/install-nix-action@v18
-      with:
-        nix_path: nixpkgs=channel:nixos-20.09
-    - run: nix-shell --command tests/lint-nix.sh
+    - uses: cachix/install-nix-action@v22
+    - run: nix run .#lint
 
   spell:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-    - uses: cachix/install-nix-action@v18
-      with:
-        nix_path: nixpkgs=channel:nixos-20.09
-    - run: nix-shell --command tests/spell.sh
+    - uses: cachix/install-nix-action@v22
+    - run: nix run .#spell

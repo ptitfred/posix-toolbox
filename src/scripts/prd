@@ -29,7 +29,7 @@ if [ "$#" = "0" ]; then
 else
   pwd=$1
 fi
-wd=${pwd#$HOME/}
+wd=${pwd#"$HOME"/}
 if [ "${wd}" = "$HOME" ]
 then
   # right in home

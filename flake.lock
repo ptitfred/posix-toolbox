@@ -1,0 +1,62 @@
+{
+  "nodes": {
+    "nixos-22_11": {
+      "locked": {
+        "lastModified": 1688392541,
+        "narHash": "sha256-lHrKvEkCPTUO+7tPfjIcb7Trk6k31rz18vkyqmkeJfY=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "ea4c80b39be4c09702b0cb3b42eab59e2ba4f24b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "nixos-22.11",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs": {
+      "locked": {
+        "lastModified": 1690835256,
+        "narHash": "sha256-SZy/Nvwbf6CorhEsvmjqgjoYNLnRfaKVZMfSnpUDPnc=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "b7cde1c47b7316f6138a2b36ef6627f3d16d645c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "nixos-23.05",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "root": {
+      "inputs": {
+        "nixos-22_11": "nixos-22_11",
+        "nixpkgs": "nixpkgs",
+        "trapd00r-ls-colors": "trapd00r-ls-colors"
+      }
+    },
+    "trapd00r-ls-colors": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1609339936,
+        "narHash": "sha256-6DnZgWXlQ1+focJGvhlVvgo97owDCj5w2zydF2ZiV8Q=",
+        "owner": "trapd00r",
+        "repo": "LS_COLORS",
+        "rev": "e91cc9cc69f6c4780f03b121bc633569742de7cd",
+        "type": "github"
+      },
+      "original": {
+        "owner": "trapd00r",
+        "repo": "LS_COLORS",
+        "rev": "e91cc9cc69f6c4780f03b121bc633569742de7cd",
+        "type": "github"
+      }
+    }
+  },
+  "root": "root",
+  "version": 7
+}
