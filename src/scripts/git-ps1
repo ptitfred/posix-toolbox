@@ -148,7 +148,7 @@ __git_ps1 ()
 
       local branch_name=${b##refs/heads/}
       if [ "$shorten" == "1" ]; then
-        branch_name=$(short-path ${b##refs/heads/})
+        branch_name=$(short-path "${b##refs/heads/}")
       fi
 
       if [ -n "${1-}" ]; then

@@ -12,58 +12,56 @@ properly use it as is.
 ## What's in the toolbox
 
 A collection of script to add to your PATH:
-- [git-authors](src/git-authors), a git script to list committers other a commit range
-- [git-bubbles](src/git-bubbles), a git script to handle pull requests
-- [git-checkout-log](src/git-checkout-log), a git script to browser reflog and follow checkouts
-- [git-prd](src/git-prd), a git script to display the path of the root of a git repository relative to your HOME directory
-- [git-pwd](src/git-pwd), a git script to display the path relative to the root of a git repository
-- [git-rm-others](src/git-rm-others), a git script to clean the working copy from untracked files
-- [git-search](src/git-search), a git script to search the diff other a commit range
-- [git-short](src/git-short), a git script to display short SHA1 of a given commit
-- [git-std-init](src/git-std-init), a git script to setup a repository with an initial empty commit and a base and master branches
-- [git-tree](src/git-tree), a git script to tree files handled by git
-- [prd](src/prd), a script to print the working directory relative to your HOME directory
-- [repeat](src/repeat), a script to repeat a command some times
-- [short-path](src/short-path), a script to abbreviate every directory unless the last part of a path
-- [wait-tcp](src/wait-tcp), a script to wait for some server sockets to be opened on a TCP
+- [git-authors](src/scripts/git-authors), a git script to list committers other a commit range
+- [git-bubbles](src/scripts/git-bubbles), a git script to handle pull requests
+- [git-checkout-log](src/scripts/git-checkout-log), a git script to browser reflog and follow checkouts
+- [git-prd](src/scripts/git-prd), a git script to display the path of the root of a git repository relative to your HOME directory
+- [git-pwd](src/scripts/git-pwd), a git script to display the path relative to the root of a git repository
+- [git-rm-others](src/scripts/git-rm-others), a git script to clean the working copy from untracked files
+- [git-search](src/scripts/git-search), a git script to search the diff other a commit range
+- [git-short](src/scripts/git-short), a git script to display short SHA1 of a given commit
+- [git-std-init](src/scripts/git-std-init), a git script to setup a repository with an initial empty commit and a base and master branches
+- [git-tree](src/scripts/git-tree), a git script to tree files handled by git
+- [prd](src/scripts/prd), a script to print the working directory relative to your HOME directory
+- [repeat](src/scripts/repeat), a script to repeat a command some times
+- [short-path](src/scripts/short-path), a script to abbreviate every directory unless the last part of a path
+- [wait-tcp](src/scripts/wait-tcp), a script to wait for some server sockets to be opened on a TCP
 
 2 source-able bash scripts to customize your terminal:
-- [git-ps1](src/bash/git-ps1), a PS1 expression, mostly focusing on handling git
-- [ls-colors](nix/ls-colors.nix), a LS_COLORS env var, built from [trapd00r's LS_COLORS](https://github.com/trapd00r/LS_COLORS)
+- [git-ps1](src/scripts/git-ps1), a PS1 expression, mostly focusing on handling git
+- [ls-colors](src/ls-colors.nix), a LS_COLORS env var, built from [trapd00r's LS_COLORS](https://github.com/trapd00r/LS_COLORS)
 
 ## How-to install
 
-- [via Nix](#nix)
-- [from sources](#from-sources) (deprecated)
+This project relies on [nix](https://nixos.org), and [flakes must be enabled](https://nixos.wiki/wiki/Flakes#Enable_flakes).
 
-### Nix
-
-You can install it from the sources this way:
+### Test from a shell
 
 ```bash
-nix-env -i -f nix/release.nix
+nix shell github:ptitfred/posix-toolbox
 ```
 
-You can also add it to an overlay, such as this one:
+### Install via a profile
+
+I would recommend you to use [home-manager](https://nix-community.github.io/home-manager/index.html#ch-nix-flakes) instead (see below), but if you prefer a more classic approach, you can install it in your user's path this way:
+
+```bash
+nix profile install github:ptitfred/posix-toolbox
+```
+
+### Install via home-manager
+
+The flake exposes an overlay, let's first configure it (via a flake input for instance):
 
 ```nix
-self: super:
+{ inputs, ... }:
 
-let fetchPackage = owner: repo: path: rev: sha256:
-      self.callPackage (self.fetchFromGitHub { inherit owner repo rev sha256; } + path) {};
-in {
-     posix-toolbox = fetchPackage "ptitfred" "posix-toolbox" "/nix/default.nix"
-       "d31128c1c8bbf7907534377633a43477c2e8d521" "lhkGUYuMvIsBJfHJEeitiH58Yh29h7ePgracCevtHHc=";
-   }
+{
+  nixpkgs.overlays = [ inputs.posix-toolbox.overlay ];
+}
 ```
 
-And later install some scripts from the nix path:
-
-```bash
-nix-env -i -f '<nixpkgs>' posix-toolbox
-```
-
-I would recommend you to use home-manager instead, in which case you would like to include the scripts you're interested in in the `home.packages` list:
+We can now add the scripts we'd like in our PATH via the `home.packages` list:
 
 ```nix
 { pkgs, ... }:
@@ -77,7 +75,7 @@ I would recommend you to use home-manager instead, in which case you would like 
 }
 ```
 
-You can also configure bash to use the PS1 provided by this project via home-manager too:
+You can also configure bash to use the PS1 provided by this project via home-manager:
 
 ```nix
 { pkgs, ... }:
@@ -111,18 +109,7 @@ It's exactly the same for the ls-colors:
 
 If you're curious about [home-manager](https://github.com/nix-community/home-manager)
 you can learn about it via [their official documentation](https://nix-community.github.io/home-manager)
-or by examples via [my own configuration](https://github.com/ptitfred/nixos-configuration).
-
-### From sources
-
-:warning: **With 2.0 release, it's untested and at your own risk.** I will only use Nix from now on.
-
-You still have the old-school approach to checkout the sources and add it to your PATH:
-
-```bash
-git checkout https://github.com/ptitfred/posix-toolbox
-export PATH=$(pwd)/posix-toolbox/src:$PATH
-```
+or by examples via [my own configuration](https://github.com/ptitfred/home-manager).
 
 * * *
 
