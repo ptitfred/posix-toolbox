@@ -2,7 +2,7 @@
   description = "A very basic flake";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-23.05";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-23.11";
     nixos-22_11.url = "github:nixos/nixpkgs/nixos-22.11";
     trapd00r-ls-colors.url = "github:trapd00r/LS_COLORS?rev=e91cc9cc69f6c4780f03b121bc633569742de7cd";
     trapd00r-ls-colors.flake = false;
