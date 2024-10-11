@@ -49,67 +49,29 @@ I would recommend you to use [home-manager](https://nix-community.github.io/home
 nix profile install github:ptitfred/posix-toolbox
 ```
 
-### Install via home-manager
-
-The flake exposes an overlay, let's first configure it (via a flake input for instance):
+### Install via home-manager as a module
 
 ```nix
 { inputs, ... }:
 
 {
-  nixpkgs.overlays = [ inputs.posix-toolbox.overlay ];
-}
-```
-
-We can now add the scripts we'd like in our PATH via the `home.packages` list:
-
-```nix
-{ pkgs, ... }:
-
-{
-  home.packages = with pkgs; [
-    posix-toolbox.git-bubbles
-    posix-toolbox.git-checkout-log
-    posix-toolbox.ls-colors
+  imports = [
+    inputs.posix-toolbox.homeManagerModules.default
   ];
-}
-```
 
-You can also configure bash to use the PS1 provided by this project via home-manager:
+  posix-toolbox.enable = true;
 
-```nix
-{ pkgs, ... }:
+  # You might have to enable git though:
+  programs.git.enable = true;
 
-{
-  programs.bash = {
-    enable = true;
-
-    initExtra = ''
-      source ${pkgs.posix-toolbox.git-ps1}/share/posix-toolbox/git-ps1
-    '';
-  };
-}
-```
-
-It's exactly the same for the ls-colors:
-
-```nix
-{ pkgs, ... }:
-
-{
-  programs.bash = {
-    enable = true;
-
-    initExtra = ''
-      source ${pkgs.posix-toolbox.ls-colors}/share/ls-colors/bash.sh
-    '';
-  };
+  # If you have bash enabled ls-colors and git-ps1 are sources:
+  programs.bash.enable = true;
 }
 ```
 
 If you're curious about [home-manager](https://github.com/nix-community/home-manager)
 you can learn about it via [their official documentation](https://nix-community.github.io/home-manager)
-or by examples via [my own configuration](https://github.com/ptitfred/home-manager).
+or by examples via [my own configuration](https://github.com/ptitfred/personal-infrastructure).
 
 * * *
 
