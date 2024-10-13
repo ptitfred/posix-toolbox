@@ -2,7 +2,7 @@ posix-toolbox:
 
 { config, lib, ... }:
 
-let cfg = config.posix-toolbox;
+let cfg = config.ptitfred.posix-toolbox;
 
     git-packages = with posix-toolbox; lib.lists.optional config.programs.git.enable [
       git-bubbles
@@ -30,7 +30,7 @@ let cfg = config.posix-toolbox;
 in
 {
   options = {
-    posix-toolbox.enable = lib.mkEnableOption "posix-toolbox";
+    ptitfred.posix-toolbox.enable = lib.mkEnableOption "posix-toolbox";
   };
 
   config = {
