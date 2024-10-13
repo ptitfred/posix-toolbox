@@ -13,5 +13,5 @@
   programs.git.enable = true;
 
   # This is how you enable posix-toolbox features (depends on bash and git being active):
-  posix-toolbox.enable = true;
+  ptitfred.posix-toolbox.enable = true;
 }
