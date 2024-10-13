@@ -38,10 +38,10 @@ I'm using [home-manager](https://nix-community.github.io/home-manager/index.html
     ptitfred-posix-toolbox.url = "github:ptitfred/posix-toolbox";
   };
 
-  outputs = inputs: {
-    homeManagerConfigurations.fredeirc = inputs.home-manager.lib.homeManagerConfiguration {
+  outputs = { home-manager, ptitfred-posix-toolbox }: {
+    homeManagerConfigurations.frederic = home-manager.lib.homeManagerConfiguration {
       modules = [
-        inputs.ptitfred-posix-toolbox.homeManagerModules.default
+        ptitfred-posix-toolbox.homeManagerModules.default
         ./your-home.nix
       ];
     };
@@ -63,6 +63,12 @@ The `your-home.nix` file might contain:
   # If you have bash enabled ls-colors and git-ps1 are sources:
   programs.bash.enable = true;
 }
+```
+
+You could then use it on your machine with the switch command:
+
+```bash
+nix run home-manager/release-24.05 -- switch --flake .#frederic
 ```
 
 You can learn more about home-manager via [their official documentation](https://nix-community.github.io/home-manager)
