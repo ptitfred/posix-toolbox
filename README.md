@@ -13,8 +13,21 @@ properly use it as is.
 
 Highlighted tools I use on a daily basis:
 - [git-bubbles](src/scripts/git-bubbles), a git script to handle pull requests
+  <div>
+    <img src="docs/git-bubbles-1.png" style="width: 65%"/>
+    <img src="docs/git-bubbles-2.png" style="width: 65%"/>
+    <img src="docs/git-bubbles-3.png" style="width: 65%"/>
+    <img src="docs/git-bubbles-4.png" style="width: 65%"/>
+    <img src="docs/git-bubbles-5.png" style="width: 65%"/>
+  </div>
 - [git-checkout-log](src/scripts/git-checkout-log), a git script to browser reflog and follow checkouts
+  <div>
+    <img src="docs/git-checkout-log.png" style="width: 65%"/>
+  </div>
 - [git-tree](src/scripts/git-tree), a git script to tree files handled by git
+  <div>
+    <img src="docs/git-tree.png" style="width: 65%"/>
+  </div>
 - [wait-tcp](src/scripts/wait-tcp), a script to wait for some server sockets to be opened on a TCP
 
 2 source-able bash scripts to customize your terminal:
