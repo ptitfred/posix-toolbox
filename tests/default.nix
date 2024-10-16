@@ -9,7 +9,7 @@ in
   lint = writeShellApplication {
     name = "posix-toolbox-lint-nix";
     runtimeInputs = [ nix-linter ];
-    text = "find . -name '*.nix' -exec nix-linter {} +";
+    text = builtins.readFile ./lint.sh;
   };
   spell = writeShellApplication {
     name = "posix-toolbox-spell";

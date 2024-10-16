@@ -28,11 +28,19 @@
         overlay = _: _: { inherit posix-toolbox; };
 
         homeManagerModule = import ./home-manager-module.nix posix-toolbox;
+
+        helpers = pkgs.callPackages ./helpers.nix {};
+
      in {
           inherit overlay;
           overlays.default = overlay;
 
           packages.${system} = tests // { inherit default; };
+
+          checks.${system} = helpers.mkChecks {
+            lint = "${tests.lint}/bin/posix-toolbox-lint-nix ${./.}";
+            spell = "${tests.spell}/bin/posix-toolbox-spell ${./.}";
+          };
 
           homeManagerModules.default = homeManagerModule;
 
