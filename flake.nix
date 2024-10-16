@@ -4,7 +4,7 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
     nixos-22_11.url = "github:nixos/nixpkgs/nixos-22.11";
-    trapd00r-ls-colors.url = "github:trapd00r/LS_COLORS?rev=e91cc9cc69f6c4780f03b121bc633569742de7cd";
+    trapd00r-ls-colors.url = "github:trapd00r/LS_COLORS";
     trapd00r-ls-colors.flake = false;
 
     home-manager.url = "github:nix-community/home-manager/release-24.05";
