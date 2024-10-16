@@ -70,6 +70,10 @@ The `your-home.nix` file might contain:
 {
   ptitfred.posix-toolbox.enable = true;
 
+  # Options for the git-bubbles script:
+  ptitfred.posix-toolbox.git-bubbles.remote-name = "some-remote-name";
+  ptitfred.posix-toolbox.git-bubbles.pattern = "---";
+
   # You might have to enable git though:
   programs.git.enable = true;
 

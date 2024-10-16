@@ -22,21 +22,48 @@ let cfg = config.ptitfred.posix-toolbox;
       lib.strings.optionalString config.programs.git.enable
         "source ${posix-toolbox.git-ps1}/share/posix-toolbox/git-ps1";
 
-    initExtra =
+    bashInitExtra =
       ''
         ${gitBashInitExtra}
         source ${posix-toolbox.ls-colors}/share/ls-colors/bash.sh
       '';
+
+    gitExtraConfig = {
+      bubbles = lib.attrsets.filterAttrs (_: value: ! (isNull value)) cfg.git-bubbles;
+    };
+
+    mkOptionalStr = description:
+      lib.mkOption {
+        inherit description;
+        type = lib.types.nullOr lib.types.str;
+        default = null;
+      };
 in
 {
   options = {
-    ptitfred.posix-toolbox.enable = lib.mkEnableOption "posix-toolbox";
+    ptitfred.posix-toolbox = {
+      enable = lib.mkEnableOption "posix-toolbox";
+
+      git-bubbles = lib.mkOption {
+        description = "options for git-bubbles";
+        default = {};
+        type = (lib.types.submodule {
+          options = {
+            remote-name = mkOptionalStr "remote-name";
+            pattern = mkOptionalStr "pattern";
+          };
+        });
+      };
+    };
   };
 
   config = {
     home.packages = lib.mkIf cfg.enable packages;
 
     programs.bash.initExtra =
-      lib.mkIf (cfg.enable && config.programs.bash.enable) initExtra;
+      lib.mkIf (cfg.enable && config.programs.bash.enable) bashInitExtra;
+
+    programs.git.extraConfig =
+      lib.mkIf (cfg.enable && config.programs.git.enable) gitExtraConfig;
   };
 }
