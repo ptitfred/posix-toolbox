@@ -1,8 +1,9 @@
 posix-toolbox:
 
-{ config, lib, ... }:
+{ config, lib, pkgs, ... }:
 
 let cfg = config.ptitfred.posix-toolbox;
+    helpers = pkgs.callPackage ./helpers.nix {};
 
     git-packages = with posix-toolbox; lib.lists.optional config.programs.git.enable [
       git-bubbles
@@ -29,55 +30,29 @@ let cfg = config.ptitfred.posix-toolbox;
       '';
 
     gitExtraConfig = {
-      bubbles = dropEmptyOptions cfg.git-bubbles;
-    } // renameGitPS1Options (dropEmptyOptions cfg.git-ps1);
+      bubbles = helpers.dropEmptyOptions cfg.git-bubbles;
+    } // renameGitPS1Options (helpers.dropEmptyOptions cfg.git-ps1);
 
-    dropEmptyOptions = lib.attrsets.filterAttrs (_: value: ! (isNull value));
-
-    renameGitPS1Options = renameOptions {
+    renameGitPS1Options = helpers.renameOptions {
       "show-dirty-state" = showDirtyState: { name = "bash";  value = { inherit showDirtyState; }; };
       "check-threshold"  = threshold:      { name = "check"; value = { inherit threshold;      }; };
       "shorten"          = shorten:        { name = "ps1";   value = { inherit shorten;        }; };
     };
-
-    renameOptions = mapping: lib.attrsets.mapAttrs' (renameOption mapping);
-
-    renameOption = mapping: name: mapping.${name};
-
-    mkSubmodule = description: options:
-      lib.mkOption {
-        inherit description;
-        default = {};
-        type = (lib.types.submodule {
-          inherit options;
-        });
-      };
-
-    mkOptionalStr  = mkOptional lib.types.str;
-    mkOptionalBool = mkOptional lib.types.bool;
-    mkOptionalInt  = mkOptional lib.types.int;
-
-    mkOptional = type: description:
-      lib.mkOption {
-        inherit description;
-        type = lib.types.nullOr type;
-        default = null;
-      };
 in
 {
   options = {
     ptitfred.posix-toolbox = {
       enable = lib.mkEnableOption "posix-toolbox";
 
-      git-bubbles = mkSubmodule "options for git-bubbles" {
-        remote-name = mkOptionalStr "remote-name";
-        pattern     = mkOptionalStr "pattern";
+      git-bubbles = helpers.mkSubmodule "options for git-bubbles" {
+        remote-name = helpers.mkOptionalStr "remote-name";
+        pattern     = helpers.mkOptionalStr "pattern";
       };
 
-      git-ps1 = mkSubmodule "options for git-ps1" {
-        show-dirty-state = mkOptionalBool "show-dirty-state";
-        check-threshold  = mkOptionalInt  "check-threshold";
-        shorten          = mkOptionalInt  "shorten";
+      git-ps1 = helpers.mkSubmodule "options for git-ps1" {
+        show-dirty-state = helpers.mkOptionalBool "show-dirty-state";
+        check-threshold  = helpers.mkOptionalInt  "check-threshold";
+        shorten          = helpers.mkOptionalInt  "shorten";
       };
     };
   };
