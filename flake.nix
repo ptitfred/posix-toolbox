@@ -27,9 +27,9 @@
 
         overlay = _: _: { inherit posix-toolbox; };
 
-        homeManagerModule = import ./home-manager-module.nix posix-toolbox;
+        homeManagerModule = import ./home-manager posix-toolbox;
 
-        helpers = pkgs.callPackages ./helpers.nix {};
+        helpers = pkgs.callPackages tests/helpers.nix {};
 
      in {
           inherit overlay;
