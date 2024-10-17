@@ -17,4 +17,11 @@
 
   # Example configuration for git-bubbles:
   ptitfred.posix-toolbox.git-bubbles.remote-name = "mine";
+
+  # Example configuration for git-ps1:
+  ptitfred.posix-toolbox.git-ps1 = {
+    show-dirty-state = true;
+    check-threshold  = 2;
+    shorten          = 2;
+  };
 }
