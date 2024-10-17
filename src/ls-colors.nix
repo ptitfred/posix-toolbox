@@ -8,5 +8,4 @@ runCommand "posix-toolbox-ls-colors"
   ''
     mkdir -p $out/share/ls-colors
     dircolors -b $src/LS_COLORS > $out/share/ls-colors/bash.sh
-    dircolors -c $src/LS_COLORS > $out/share/ls-colors/csh.sh
   ''
