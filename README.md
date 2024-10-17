@@ -1,7 +1,5 @@
 # posix-toolbox
 
-![tests](https://github.com/ptitfred/posix-toolbox/workflows/tests/badge.svg)
-
 ## About
 
 A collection of Unix scripts to ease my life. Mostly around git.
