@@ -64,17 +64,16 @@
     "trapd00r-ls-colors": {
       "flake": false,
       "locked": {
-        "lastModified": 1609339936,
-        "narHash": "sha256-6DnZgWXlQ1+focJGvhlVvgo97owDCj5w2zydF2ZiV8Q=",
+        "lastModified": 1723826680,
+        "narHash": "sha256-/l4LpOBHPvfg6kmLvK96b5pOjEk9wh5QwfH79h5aVpw=",
         "owner": "trapd00r",
         "repo": "LS_COLORS",
-        "rev": "e91cc9cc69f6c4780f03b121bc633569742de7cd",
+        "rev": "20cc87c21f5f54cf86be7e5867af9efc65b8b4e3",
         "type": "github"
       },
       "original": {
         "owner": "trapd00r",
         "repo": "LS_COLORS",
-        "rev": "e91cc9cc69f6c4780f03b121bc633569742de7cd",
         "type": "github"
       }
     }
