@@ -23,7 +23,8 @@
 
         tests = pkgs.callPackages ./tests {};
 
-        overlay = _: _: { inherit posix-toolbox; };
+        defaultOverlay = _: _: { inherit posix-toolbox; };
+        linterOverlay = _: _: { posix-toolbox = { inherit (posix-toolbox) nix-linter; }; };
 
         packages = tests // {
           default = pkgs.symlinkJoin {
@@ -39,8 +40,8 @@
         helpers = pkgs.callPackages tests/helpers.nix {};
 
      in {
-          inherit overlay;
-          overlays.default = overlay;
+          overlays.default = defaultOverlay;
+          overlays.linter = linterOverlay;
 
           packages.${system} = packages;
 
