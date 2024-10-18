@@ -1,5 +1,5 @@
 {
-  description = "A very basic flake";
+  description = "Personal toolbox: A collection of Unix scripts to ease my life. Mostly around git.";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
@@ -16,16 +16,23 @@
         pkgs = import nixpkgs { inherit system; };
         previous = import nixos-22_11 { inherit system; };
 
-        posix-toolbox = pkgs.callPackages ./src { inherit trapd00r-ls-colors; };
-
-        tests = pkgs.callPackages ./tests { inherit (previous) nix-linter; };
-
-        default = pkgs.symlinkJoin {
-          name = "posix-toolbox";
-          paths = builtins.attrValues posix-toolbox;
+        posix-toolbox = pkgs.callPackages ./src {
+          inherit trapd00r-ls-colors;
+          pinned-nix-linter = previous.nix-linter;
         };
 
+        tests = pkgs.callPackages ./tests {};
+
         overlay = _: _: { inherit posix-toolbox; };
+
+        packages = tests // {
+          default = pkgs.symlinkJoin {
+            name = "posix-toolbox";
+            paths = builtins.attrValues posix-toolbox;
+          };
+
+          lint = posix-toolbox.nix-linter;
+        };
 
         homeManagerModule = import ./home-manager posix-toolbox;
 
@@ -35,10 +42,10 @@
           inherit overlay;
           overlays.default = overlay;
 
-          packages.${system} = tests // { inherit default; };
+          packages.${system} = packages;
 
           checks.${system} = helpers.mkChecks {
-            lint = "${tests.lint}/bin/posix-toolbox-lint-nix ${./.}";
+            lint = "${posix-toolbox.nix-linter}/bin/nix-linter ${./.}";
             spell = "${tests.spell}/bin/posix-toolbox-spell ${./.}";
           };
 

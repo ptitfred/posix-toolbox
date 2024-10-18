@@ -1,7 +1,10 @@
 { callPackage, trapd00r-ls-colors
 , lib, stdenv, makeWrapper
 , coreutils, findutils, gawk, git, gnugrep, gnused, less
-, lsof, psmisc, tree, utillinux }:
+, lsof, psmisc, tree, utillinux
+, pinned-nix-linter
+, excludedPaths ? []
+}:
 
 let packageScript =
       script: inputs: description:
@@ -47,5 +50,6 @@ rec {
 
    ls-colors = callPackage ./ls-colors.nix { inherit trapd00r-ls-colors; };
    git-ps1   = callPackage ./git-ps1.nix   { inherit git-pwd git-prd prd short-path; };
- }
 
+   nix-linter = callPackage ./nix-linter.nix { inherit pinned-nix-linter excludedPaths; };
+ }
