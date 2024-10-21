@@ -11,12 +11,42 @@ let cfg = config.ptitfred.posix-toolbox;
       git-tree
     ];
 
-    tools-packages = [ posix-toolbox.wait-tcp ];
+    git-extra-packages = with posix-toolbox; lib.lists.optional config.programs.git.enable [
+      git-authors
+      git-prd
+      git-pwd
+      git-rm-others
+      git-search
+      git-short
+      git-std-init
+    ];
 
-    packages =
+    tools-packages = with posix-toolbox; [
+      wait-tcp
+    ];
+
+    tools-extra-packages = with posix-toolbox; [
+      repeat
+    ];
+
+    base-packages =
       lib.lists.flatten [
         git-packages
         tools-packages
+      ];
+
+    extra-packages =
+      lib.lists.optional cfg.extras (
+        lib.lists.flatten [
+          git-extra-packages
+          tools-extra-packages
+        ]
+      );
+
+    packages =
+      lib.lists.flatten [
+        base-packages
+        extra-packages
       ];
 
     gitBashInitExtra =
@@ -54,6 +84,8 @@ in
         check-threshold  = helpers.mkOptionalInt  "check-threshold";
         shorten          = helpers.mkOptionalInt  "shorten";
       };
+
+      extras = lib.mkEnableOption "extra posix-toolbox packages";
     };
   };
 

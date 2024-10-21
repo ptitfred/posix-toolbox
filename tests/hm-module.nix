@@ -24,4 +24,6 @@
     check-threshold  = 2;
     shorten          = 2;
   };
+
+  ptitfred.posix-toolbox.extras = true;
 }
