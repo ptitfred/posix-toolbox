@@ -121,6 +121,8 @@ Other scripts I used to use or are used here:
 - [repeat](src/repeat/repeat.sh), a script to repeat a command some times
 - [short-path](src/short-path/short-path.sh), a script to abbreviate every directory unless the last part of a path
 
+Those scripts can be installed by the home-manager module with the `ptitfred.posix-toolbox.extras` flag.
+
 * * *
 
 Copyright &copy; 2010-, Frédéric Menou and Céline Louvet. Licensed under [MIT License].
