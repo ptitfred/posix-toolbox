@@ -27,7 +27,7 @@ let context = {
       short-path       = callPackage ./short-path       {};
       wait-tcp         = callPackage ./wait-tcp         {};
       ls-colors        = callPackage ./ls-colors.nix    {};
-      git-ps1          = callPackage ./git-ps1.nix      {};
+      git-ps1          = callPackage ./git-ps1          {};
       nix-linter       = callPackage ./nix-linter.nix   {};
     };
  in scripts
