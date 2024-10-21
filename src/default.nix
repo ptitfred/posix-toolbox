@@ -1,55 +1,33 @@
-{ callPackage, trapd00r-ls-colors
-, lib, stdenv, makeWrapper
-, coreutils, findutils, gawk, git, gnugrep, gnused, less
-, lsof, psmisc, tree, utillinux
+{ pkgs, lib
 , pinned-nix-linter
+, trapd00r-ls-colors
 , excludedPaths ? []
 }:
 
-let packageScript =
-      script: inputs: description:
-        stdenv.mkDerivation {
-          name = "posix-toolbox-" + script;
+let context = {
+      inherit trapd00r-ls-colors pinned-nix-linter excludedPaths;
+      packageScript = pkgs.callPackage ./package-script.nix {};
+    };
 
-          src = ./scripts;
+    callPackage = lib.callPackageWith (pkgs // context // scripts);
 
-          buildInputs = inputs ++ [ makeWrapper ] ;
-
-          installPhase =
-            let runtimePath = lib.makeBinPath inputs;
-             in ''
-                  mkdir -p $out/bin
-                  cp $src/${script} $out/bin/${script}
-                  wrapProgram $out/bin/${script} --prefix PATH : "${runtimePath}"
-                '';
-
-          meta = {
-            homepage = "https://github.com/ptitfred/posix-toolbox";
-            inherit description;
-            license = lib.licenses.mit;
-          };
-        };
-in
-rec {
-   git-authors      = packageScript "git-authors"      [ coreutils findutils git gnused            ] "A git script to list committers other a commit range";
-   git-bubbles      = packageScript "git-bubbles"      [ coreutils git gnused                      ] "A git script to handle pull requests";
-   git-checkout-log = packageScript "git-checkout-log" [ coreutils git gnused less                 ] "A git script to browser reflog and follow checkouts";
-   git-prd          = packageScript "git-prd"          [ git prd                                   ] "A git script to display the path of the root of a git repository relative to your HOME directory";
-   git-pwd          = packageScript "git-pwd"          [ coreutils git                             ] "A git script to display the path relative to the root of a git repository";
-   git-rm-others    = packageScript "git-rm-others"    [ coreutils findutils git                   ] "A git script to clean the working copy from untracked files";
-   git-search       = packageScript "git-search"       [ findutils git gnugrep                     ] "A git script to search the diff other a commit range";
-   git-short        = packageScript "git-short"        [ git                                       ] "A git script to display short SHA1 of a given commit";
-   git-std-init     = packageScript "git-std-init"     [ coreutils git                             ] "A git script to setup a repository with an initial empty commit and a base and master branches";
-   git-tree         = packageScript "git-tree"         [ coreutils git tree                        ] "A git script to tree files handled by git";
-   prd              = packageScript "prd"              [ coreutils                                 ] "A script to print the working directory relative to your HOME directory";
-   repeat           = packageScript "repeat"           [ coreutils gnused utillinux                ] "A script to repeat a command some times";
-   short-path       = packageScript "short-path"       [ coreutils gnused                          ] "A script to abbreviate every directory unless the last part of a path";
-
-   # FIXME: make buildInputs dependent on the target system (darwin vs linux)
-   wait-tcp         = packageScript "wait-tcp"         [ coreutils gawk gnugrep gnused lsof psmisc ] "A script to wait for some server sockets to be opened on a TCP";
-
-   ls-colors = callPackage ./ls-colors.nix { inherit trapd00r-ls-colors; };
-   git-ps1   = callPackage ./git-ps1.nix   { inherit git-pwd git-prd prd short-path; };
-
-   nix-linter = callPackage ./nix-linter.nix { inherit pinned-nix-linter excludedPaths; };
- }
+    scripts = {
+      git-authors      = callPackage ./git-authors      {};
+      git-bubbles      = callPackage ./git-bubbles      {};
+      git-checkout-log = callPackage ./git-checkout-log {};
+      git-prd          = callPackage ./git-prd          {};
+      git-pwd          = callPackage ./git-pwd          {};
+      git-rm-others    = callPackage ./git-rm-others    {};
+      git-search       = callPackage ./git-search       {};
+      git-short        = callPackage ./git-short        {};
+      git-std-init     = callPackage ./git-std-init     {};
+      git-tree         = callPackage ./git-tree         {};
+      prd              = callPackage ./prd              {};
+      repeat           = callPackage ./repeat           {};
+      short-path       = callPackage ./short-path       {};
+      wait-tcp         = callPackage ./wait-tcp         {};
+      ls-colors        = callPackage ./ls-colors.nix    {};
+      git-ps1          = callPackage ./git-ps1.nix      {};
+      nix-linter       = callPackage ./nix-linter.nix   {};
+    };
+ in scripts
