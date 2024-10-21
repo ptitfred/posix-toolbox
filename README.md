@@ -10,7 +10,7 @@ properly use it as is.
 ## What's in the toolbox
 
 Highlighted tools I use on a daily basis:
-- [git-bubbles](src/scripts/git-bubbles), a git script to handle pull requests
+- [git-bubbles](src/git-bubbles/git-bubbles.sh), a git script to handle pull requests
   <div>
     <img src="docs/git-bubbles-1.png" style="width: 65%"/>
     <img src="docs/git-bubbles-2.png" style="width: 65%"/>
@@ -18,18 +18,18 @@ Highlighted tools I use on a daily basis:
     <img src="docs/git-bubbles-4.png" style="width: 65%"/>
     <img src="docs/git-bubbles-5.png" style="width: 65%"/>
   </div>
-- [git-checkout-log](src/scripts/git-checkout-log), a git script to browser reflog and follow checkouts
+- [git-checkout-log](src/git-checkout-log/git-checkout-log.sh), a git script to browser reflog and follow checkouts
   <div>
     <img src="docs/git-checkout-log.png" style="width: 65%"/>
   </div>
-- [git-tree](src/scripts/git-tree), a git script to tree files handled by git
+- [git-tree](src/git-tree/git-tree.sh), a git script to tree files handled by git
   <div>
     <img src="docs/git-tree.png" style="width: 65%"/>
   </div>
-- [wait-tcp](src/scripts/wait-tcp), a script to wait for some server sockets to be opened on a TCP
+- [wait-tcp](src/wait-tcp/wait-tcp.sh), a script to wait for some server sockets to be opened on a TCP
 
 2 source-able bash scripts to customize your terminal:
-- [git-ps1](src/scripts/git-ps1), a PS1 expression, mostly focusing on handling git
+- [git-ps1](src/git-ps1/git-ps1.sh), a PS1 expression, mostly focusing on handling git
 - [ls-colors](src/ls-colors.nix), a LS_COLORS env var, built from [trapd00r's LS_COLORS](https://github.com/trapd00r/LS_COLORS)
 
 Other scripts live alond but I don't use them directly, [see below](#other-scripts).
@@ -110,16 +110,16 @@ nix shell github:ptitfred/posix-toolbox
 ## Other scripts
 
 Other scripts I used to use or are used here:
-- [git-authors](src/scripts/git-authors), a git script to list committers other a commit range
-- [git-prd](src/scripts/git-prd), a git script to display the path of the root of a git repository relative to your HOME directory
-- [git-pwd](src/scripts/git-pwd), a git script to display the path relative to the root of a git repository
-- [git-rm-others](src/scripts/git-rm-others), a git script to clean the working copy from untracked files
-- [git-search](src/scripts/git-search), a git script to search the diff other a commit range
-- [git-short](src/scripts/git-short), a git script to display short SHA1 of a given commit
-- [git-std-init](src/scripts/git-std-init), a git script to setup a repository with an initial empty commit and a base and master branches
-- [prd](src/scripts/prd), a script to print the working directory relative to your HOME directory
-- [repeat](src/scripts/repeat), a script to repeat a command some times
-- [short-path](src/scripts/short-path), a script to abbreviate every directory unless the last part of a path
+- [git-authors](src/git-authors/git-authors.sh), a git script to list committers other a commit range
+- [git-prd](src/git-prd/git-prd.sh), a git script to display the path of the root of a git repository relative to your HOME directory
+- [git-pwd](src/git-pwd/git-pwd.sh), a git script to display the path relative to the root of a git repository
+- [git-rm-others](src/git-rm-others/git-rm-others.sh), a git script to clean the working copy from untracked files
+- [git-search](src/git-search/git-search.sh), a git script to search the diff other a commit range
+- [git-short](src/git-short/git-short.sh), a git script to display short SHA1 of a given commit
+- [git-std-init](src/git-std-init/git-std-init.sh), a git script to setup a repository with an initial empty commit and a base and master branches
+- [prd](src/prd/prd.sh), a script to print the working directory relative to your HOME directory
+- [repeat](src/repeat/repeat.sh), a script to repeat a command some times
+- [short-path](src/short-path/short-path.sh), a script to abbreviate every directory unless the last part of a path
 
 * * *
 
