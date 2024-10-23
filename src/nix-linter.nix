@@ -1,11 +1,11 @@
 { excludedPaths
-, lib, pinned-nix-linter, writeShellApplication }:
+, findutils, lib, pinned-nix-linter, writeShellApplication }:
 
 let toFindExcludedPath = path: "! -path \"$src/${path}\"";
     excludedPathsStr = lib.strings.concatMapStringsSep " " toFindExcludedPath excludedPaths;
  in writeShellApplication {
       name = "nix-linter";
-      runtimeInputs = [ pinned-nix-linter ];
+      runtimeInputs = [ findutils pinned-nix-linter ];
       text = ''
         set -e
 
