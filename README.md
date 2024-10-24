@@ -12,19 +12,19 @@ properly use it as is.
 Highlighted tools I use on a daily basis:
 - [git-bubbles](src/git-bubbles/git-bubbles.sh), a git script to handle pull requests
   <div>
-    <img src="docs/git-bubbles-1.png" style="width: 65%"/>
-    <img src="docs/git-bubbles-2.png" style="width: 65%"/>
-    <img src="docs/git-bubbles-3.png" style="width: 65%"/>
-    <img src="docs/git-bubbles-4.png" style="width: 65%"/>
-    <img src="docs/git-bubbles-5.png" style="width: 65%"/>
+    <img src="src/git-bubbles/docs/git-bubbles-1.png" style="width: 65%"/>
+    <img src="src/git-bubbles/docs/git-bubbles-2.png" style="width: 65%"/>
+    <img src="src/git-bubbles/docs/git-bubbles-3.png" style="width: 65%"/>
+    <img src="src/git-bubbles/docs/git-bubbles-4.png" style="width: 65%"/>
+    <img src="src/git-bubbles/docs/git-bubbles-5.png" style="width: 65%"/>
   </div>
 - [git-checkout-log](src/git-checkout-log/git-checkout-log.sh), a git script to browser reflog and follow checkouts
   <div>
-    <img src="docs/git-checkout-log.png" style="width: 65%"/>
+    <img src="src/git-checkout-log/docs/git-checkout-log.png" style="width: 65%"/>
   </div>
 - [git-tree](src/git-tree/git-tree.sh), a git script to tree files handled by git
   <div>
-    <img src="docs/git-tree.png" style="width: 65%"/>
+    <img src="src/git-tree/docs/git-tree.png" style="width: 65%"/>
   </div>
 - [wait-tcp](src/wait-tcp/wait-tcp.sh), a script to wait for some server sockets to be opened on a TCP
 
