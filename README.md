@@ -45,7 +45,7 @@ I'm using [home-manager](https://nix-community.github.io/home-manager/index.html
 ```nix
 {
   inputs = {
-    home-manager.url = "github:nix-community/home-manager/release-24.05";
+    home-manager.url = "github:nix-community/home-manager/release-24.11";
     ptitfred-posix-toolbox.url = "github:ptitfred/posix-toolbox";
   };
 
@@ -83,7 +83,7 @@ The `your-home.nix` file might contain:
 You could then use it on your machine with the switch command:
 
 ```bash
-nix run home-manager/release-24.05 -- switch --flake .#frederic
+nix run home-manager/release-24.11 -- switch --flake .#frederic
 ```
 
 You can learn more about home-manager via [their official documentation](https://nix-community.github.io/home-manager)

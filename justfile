@@ -14,7 +14,7 @@ lint:
   nix run .#lint
 
 test:
-  nix run home-manager/release-24.05 -- build --flake .#tests
+  nix run home-manager/release-24.11 -- build --flake .#tests
 
 # Like the CI would do
 checks: lint tools test
