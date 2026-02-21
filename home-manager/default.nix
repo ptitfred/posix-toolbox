@@ -95,7 +95,7 @@ in
     programs.bash.initExtra =
       lib.mkIf (cfg.enable && config.programs.bash.enable) bashInitExtra;
 
-    programs.git.extraConfig =
+    programs.git.settings =
       lib.mkIf (cfg.enable && config.programs.git.enable) gitExtraConfig;
   };
 }
