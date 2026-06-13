@@ -1,11 +1,11 @@
 { excludedPaths
-, findutils, lib, pinned-nix-linter, writeShellApplication }:
+, coreutils, findutils, lib, nil, writeShellApplication }:
 
 let toFindExcludedPath = path: "! -path \"$src/${path}\"";
     excludedPathsStr = lib.strings.concatMapStringsSep " " toFindExcludedPath excludedPaths;
  in writeShellApplication {
       name = "nix-linter";
-      runtimeInputs = [ findutils pinned-nix-linter ];
+      runtimeInputs = [ coreutils findutils nil];
       text = ''
         set -e
 
@@ -20,6 +20,20 @@ let toFindExcludedPath = path: "! -path \"$src/${path}\"";
           src="."
         fi
 
-        find "$src" -type f -name "*.nix" ${excludedPathsStr} -exec nix-linter {} + && echo "Everything is fine!"
+        output="$(mktemp nix-lint-XXXXXX.log)"
+
+        function cleanup() {
+          rm "$output"
+        }
+
+        trap cleanup EXIT
+
+        find "$src" -type f -name "*.nix" ${excludedPathsStr} -exec nil diagnostics {} + | tee -a "$output"
+
+        if [[ $(wc -l "$output") == "0 $output" ]]; then
+          echo "Everything is fine!"
+        else
+          exit 1
+        fi
       '';
     }

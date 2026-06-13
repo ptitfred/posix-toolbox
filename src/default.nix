@@ -1,11 +1,10 @@
 { pkgs, lib
-, pinned-nix-linter
 , trapd00r-ls-colors
 , excludedPaths ? []
 }:
 
 let context = {
-      inherit trapd00r-ls-colors pinned-nix-linter excludedPaths;
+      inherit trapd00r-ls-colors excludedPaths;
       packageScript = pkgs.callPackage ./package-script.nix {};
     };
 
