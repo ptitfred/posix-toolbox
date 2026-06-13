@@ -2,11 +2,11 @@
   description = "Personal toolbox: A collection of Unix scripts to ease my life. Mostly around git.";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
     trapd00r-ls-colors.url = "github:trapd00r/LS_COLORS";
     trapd00r-ls-colors.flake = false;
 
-    home-manager.url = "github:nix-community/home-manager/release-25.11";
+    home-manager.url = "github:nix-community/home-manager/release-26.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
   };
 
