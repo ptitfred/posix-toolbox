@@ -3,7 +3,6 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
-    nixos-22_11.url = "github:nixos/nixpkgs/nixos-22.11";
     trapd00r-ls-colors.url = "github:trapd00r/LS_COLORS";
     trapd00r-ls-colors.flake = false;
 
@@ -11,14 +10,12 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { nixpkgs, nixos-22_11, trapd00r-ls-colors, home-manager, ... }:
+  outputs = { nixpkgs, trapd00r-ls-colors, home-manager, ... }:
     let system = "x86_64-linux";
         pkgs = import nixpkgs { inherit system; };
-        previous = import nixos-22_11 { inherit system; };
 
         posix-toolbox = pkgs.callPackages ./src {
           inherit trapd00r-ls-colors;
-          pinned-nix-linter = previous.nix-linter;
         };
 
         tests = pkgs.callPackages ./tests {};
